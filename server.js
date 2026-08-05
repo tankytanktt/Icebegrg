@@ -11,24 +11,55 @@ const app  = express();
 const PORT = process.env.PORT || 3000;
 const DISCORD_API = 'https://discord.com/api/v10';
 
-// ── Session store (file-based so sessions survive server restarts) ────────────
-const FileStore = require('session-file-store')(session);
-
 // ── Supabase client ──────────────────────────────────────────────────────────
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_SERVICE_KEY
 );
 
+// ── Supabase session store ────────────────────────────────────────────────────
+// Stores sessions in Supabase `sessions` table so they survive restarts/deploys
+const SupabaseStore = require('express-session').Store;
+
+class SupabaseSessionStore extends SupabaseStore {
+  async get(sid, cb) {
+    try {
+      const { data } = await supabase.from('sessions').select('sess,expire').eq('sid', sid).single();
+      if (!data) return cb(null, null);
+      if (new Date(data.expire) < new Date()) {
+        await supabase.from('sessions').delete().eq('sid', sid);
+        return cb(null, null);
+      }
+      cb(null, data.sess);
+    } catch(e) { cb(e); }
+  }
+  async set(sid, sess, cb) {
+    try {
+      const expire = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString();
+      await supabase.from('sessions').upsert({ sid, sess, expire }, { onConflict: 'sid' });
+      cb(null);
+    } catch(e) { cb(e); }
+  }
+  async destroy(sid, cb) {
+    try {
+      await supabase.from('sessions').delete().eq('sid', sid);
+      cb(null);
+    } catch(e) { cb(e); }
+  }
+  async touch(sid, sess, cb) {
+    await this.set(sid, sess, cb);
+  }
+}
+
 // ── Middleware ───────────────────────────────────────────────────────────────
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  store: new FileStore({ path: './sessions', ttl: 7 * 24 * 60 * 60, retries: 1, logFn: function(){} }),
+  store: new SupabaseSessionStore(),
   secret: process.env.SESSION_SECRET || 'esports-secret-change-me',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true }
+  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 

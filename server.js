@@ -52,6 +52,7 @@ class SupabaseSessionStore extends SupabaseStore {
 }
 
 // ── Middleware ───────────────────────────────────────────────────────────────
+app.set('trust proxy', 1); // trust Render's proxy so secure cookies work
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
@@ -59,7 +60,7 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'esports-secret-change-me',
   resave: false,
   saveUninitialized: false,
-  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'lax' }
+  cookie: { maxAge: 7 * 24 * 60 * 60 * 1000, httpOnly: true, secure: true, sameSite: 'none' }
 }));
 app.use(express.static(path.join(__dirname, 'public')));
 

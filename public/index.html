@@ -1846,7 +1846,8 @@
   }
 
   // Close modal on backdrop click or Escape
-  document.getElementById('bracket-result-modal').addEventListener('click', function(e) {
+  var _brmEl = document.getElementById('bracket-result-modal');
+  if (_brmEl) _brmEl.addEventListener('click', function(e) {
     if (e.target === this) closeBracketResultModal();
   });
   document.addEventListener('keydown', function(e) {

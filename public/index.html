@@ -8,7 +8,7 @@
   <meta name="theme-color" content="#45f3ff" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <meta name="apple-mobile-web-app-title" content="Showdown" />
+  <meta name="apple-mobile-web-app-title" content="ICEBERG Tournament" />
   <link rel="manifest" href="/manifest.json" />
   <link rel="apple-touch-icon" href="/icons/icon.svg" />
   <link rel="stylesheet" href="/style.css" />
@@ -301,7 +301,7 @@
 <div id="pwa-banner" style="display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 32px);max-width:420px;background:linear-gradient(135deg,#0d1017,#111827);border:1px solid rgba(69,243,255,.3);border-radius:14px;padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,.6);backdrop-filter:blur(20px);display:none;align-items:center;gap:12px;">
   <div style="width:40px;height:40px;border-radius:10px;background:rgba(69,243,255,.1);border:1px solid rgba(69,243,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.3rem;">⚡</div>
   <div style="flex:1;min-width:0;">
-    <div style="font-weight:800;font-size:.9rem;color:var(--text);">Install ICEBERG Showdown</div>
+    <div style="font-weight:800;font-size:.9rem;color:var(--text);">Install ICEBERG Tournament</div>
     <div style="font-size:.75rem;color:var(--muted);margin-top:2px;">Add to home screen for quick access</div>
   </div>
   <button id="pwa-install-btn" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:8px;background:var(--cyan);color:#000;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">Install</button>
@@ -330,7 +330,7 @@
       <div id="admin-create-wrap" style="display:none;margin-bottom:20px;">
         <button class="btn btn-primary" onclick="document.getElementById('quick-create-form').style.display=document.getElementById('quick-create-form').style.display==='block'?'none':'block'">+ Create Tournament</button>
         <form id="quick-create-form" style="display:none;max-width:480px;margin:16px auto 0;background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:left;" onsubmit="createTournament(event)">
-          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" data-field="title" class="form-input" required placeholder="e.g. September Showdown 2026"></div>
+          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" data-field="title" class="form-input" required placeholder="e.g. e.g. ICEBERG Tournament 2026"></div>
           <div class="form-group"><label class="form-label">Status</label><select data-field="status" class="form-input"><option value="upcoming">Upcoming</option><option value="registrations_open">Registrations Open</option><option value="draft">Draft Phase</option><option value="live">Live</option></select></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
             <div class="form-group"><label class="form-label">Start Date</label><input type="datetime-local" data-field="date" class="form-input" required></div>
@@ -543,7 +543,7 @@
         <!-- Edit form — hidden by default -->
         <form id="edit-tournament-form" style="display:none;background:var(--bg2);padding:24px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border);" onsubmit="saveEditTournament(event)">
           <h4 style="margin-bottom:20px;color:var(--cyan);">Edit Tournament</h4>
-          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" id="edit-field-title" class="form-input" required placeholder="e.g. September Showdown 2026"></div>
+          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" id="edit-field-title" class="form-input" required placeholder="e.g. e.g. ICEBERG Tournament 2026"></div>
           <div class="form-group"><label class="form-label">Status</label><select id="edit-field-status" class="form-input"><option value="upcoming">Upcoming</option><option value="registrations_open">Registrations Open</option><option value="draft">Draft Phase</option><option value="live">Live</option><option value="concluded">Concluded</option></select></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="form-group"><label class="form-label">Start Date</label><input type="datetime-local" id="edit-field-date" class="form-input" required></div>
@@ -775,7 +775,7 @@
 
         <form id="sa-create-form" style="display:none;background:var(--bg2);padding:24px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border);" onsubmit="createTournament(event)">
           <h4 style="margin-bottom:20px;color:var(--cyan);">Create New Tournament</h4>
-          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" data-field="title" class="form-input" required placeholder="e.g. September Showdown 2026"></div>
+          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" data-field="title" class="form-input" required placeholder="e.g. e.g. ICEBERG Tournament 2026"></div>
           <div class="form-group"><label class="form-label">Status</label><select data-field="status" class="form-input"><option value="upcoming">Upcoming</option><option value="registrations_open">Registrations Open</option><option value="draft">Draft Phase</option><option value="live">Live</option><option value="concluded">Concluded</option></select></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
             <div class="form-group"><label class="form-label">Start Date</label><input type="datetime-local" data-field="date" class="form-input" required></div>

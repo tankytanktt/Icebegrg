@@ -1,6 +1,6 @@
 {
-  "name": "ICEBERG Showdown",
-  "short_name": "Showdown",
+  "name": "ICEBERG Tournament",
+  "short_name": "ICEBERG",
   "description": "ICEBERG MLBB 5v5 Auction Tournament",
   "start_url": "/",
   "display": "standalone",

@@ -1,0 +1,2139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sept 15th Showdown — MLBB 5v5 ICEBERG Tournament</title>
+  <meta name="description" content="Register your Mobile Legends team for the ultimate 5v5 ICEBERG auction tournament." />
+  <meta name="theme-color" content="#45f3ff" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Showdown" />
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="apple-touch-icon" href="/icons/icon.svg" />
+  <link rel="stylesheet" href="/style.css" />
+  <style>
+    /* ── Hero ── */
+    .hero { min-height:88vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:60px 24px; position:relative; z-index:1; }
+    .hero-eyebrow { font-size:.78rem; font-weight:700; letter-spacing:4px; text-transform:uppercase; color:var(--cyan); border:1px solid rgba(69,243,255,.3); border-radius:99px; padding:6px 20px; margin-bottom:24px; display:inline-block; }
+    .hero-title { font-size:clamp(3rem,9vw,7rem); font-weight:900; letter-spacing:-1px; line-height:1; margin-bottom:20px; background:linear-gradient(135deg,#fff 20%,var(--cyan) 60%,var(--pink) 100%); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hero-date { font-size:clamp(1rem,3vw,1.5rem); font-weight:700; color:var(--muted); letter-spacing:2px; margin-bottom:32px; }
+    .hero-date span { color:var(--pink); }
+    .countdown { display:flex; gap:16px; justify-content:center; margin-bottom:48px; flex-wrap:wrap; }
+    .countdown-block { background:var(--glass2); border:1px solid var(--border); border-radius:var(--radius); padding:20px 28px; text-align:center; min-width:90px; }
+    .countdown-val { font-size:2.5rem; font-weight:900; color:var(--cyan); line-height:1; }
+    .countdown-label { font-size:.65rem; color:var(--muted); text-transform:uppercase; letter-spacing:2px; margin-top:4px; }
+    .hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    /* ── Sponsors ── */
+    .sponsors-strip { padding:40px 24px; border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:rgba(0,0,0,.2); }
+    .sponsors-label { text-align:center; font-size:.7rem; text-transform:uppercase; letter-spacing:3px; color:var(--muted); margin-bottom:24px; }
+    .sponsors-row { display:flex; justify-content:center; gap:40px; flex-wrap:wrap; align-items:center; }
+    .sponsor-item { display:flex; flex-direction:column; align-items:center; gap:6px; opacity:.8; transition:opacity .2s; }
+    .sponsor-item:hover { opacity:1; }
+    .sponsor-logo { width:64px; height:64px; border-radius:12px; border:1px solid var(--border); background:var(--glass2); display:flex; align-items:center; justify-content:center; font-size:1.5rem; }
+    .sponsor-name { font-size:.8rem; font-weight:700; color:var(--muted); letter-spacing:1px; text-transform:uppercase; }
+    /* ── Gate ── */
+    .gate { max-width:520px; margin:0 auto; text-align:center; padding:80px 24px; }
+    .gate-icon { font-size:3rem; margin-bottom:16px; }
+    .gate h2 { font-size:1.5rem; font-weight:800; margin-bottom:10px; }
+    .gate p { color:var(--muted); line-height:1.7; margin-bottom:28px; }
+    /* ── Team status ── */
+    .team-status-card { background:rgba(16,185,129,.05); border:1px solid rgba(16,185,129,.2); border-radius:var(--radius); padding:24px; text-align:center; }
+    .ts-name { font-size:1.5rem; font-weight:800; margin:8px 0; }
+    .ts-players { color:var(--muted); font-size:.88rem; margin-top:12px; }
+    /* ── Prize grid ── */
+    .prize-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:32px; }
+    .prize-card { background:var(--glass); border:1px solid var(--border); border-radius:var(--radius); padding:28px 20px; text-align:center; transition:transform .25s; }
+    .prize-card:hover { transform:translateY(-4px); }
+    .prize-card.gold { border-color:rgba(251,191,36,.3); } .prize-card.silver { border-color:rgba(148,163,184,.3); } .prize-card.bronze { border-color:rgba(180,83,9,.3); }
+    .prize-rank { font-size:.7rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:8px; }
+    .prize-trophy { font-size:2.5rem; margin-bottom:8px; }
+    .prize-amount { font-size:2rem; font-weight:900; }
+    .gold .prize-amount { color:var(--gold); } .silver .prize-amount { color:#94a3b8; } .bronze .prize-amount { color:#b45309; }
+    .special-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; }
+    .special-card { background:rgba(168,85,247,.07); border:1px solid rgba(168,85,247,.2); border-radius:var(--radius-sm); padding:18px; text-align:center; transition:border-color .2s; }
+    .special-card:hover { border-color:rgba(168,85,247,.5); }
+    .special-card .sc-icon { font-size:1.8rem; margin-bottom:8px; }
+    .special-card .sc-title { font-size:.8rem; font-weight:700; color:var(--purple); text-transform:uppercase; letter-spacing:1px; }
+    .special-card .sc-amount { font-size:1.2rem; font-weight:800; color:var(--text); margin-top:4px; }
+
+
+    /* ── Inner Tournament Tabs ── */
+    .t-inner-tab { font-family:'Outfit',sans-serif; font-weight:700; font-size:.82rem; letter-spacing:1px; text-transform:uppercase; padding:12px 20px; border:none; background:transparent; color:var(--muted); cursor:pointer; border-bottom:2px solid transparent; transition:all .2s; white-space:nowrap; }
+    .t-inner-tab:hover { color:var(--text); }
+    .t-inner-tab.active { color:var(--cyan); border-bottom-color:var(--cyan); }
+    .inner-tab-panel { display:none; } .inner-tab-panel.active { display:block; animation:fadeUp .3s ease; }
+
+    /* ── Admin Layout ── */
+    .admin-layout { display:grid; grid-template-columns:220px 1fr; min-height:calc(100vh - 64px); }
+    .sidebar { background:var(--bg2); border-right:1px solid var(--border); padding:20px 12px; display:flex; flex-direction:column; gap:2px; }
+    .sidebar-section { font-size:.62rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); padding:14px 12px 4px; }
+    .sidebar-link { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:var(--radius-sm); color:var(--muted); font-weight:600; font-size:.85rem; cursor:pointer; border:none; background:transparent; font-family:'Outfit',sans-serif; width:100%; text-align:left; transition:all .2s; }
+    .sidebar-link:hover { background:var(--glass2); color:var(--text); }
+    .sidebar-link.active { background:rgba(69,243,255,.08); color:var(--cyan); border-left:3px solid var(--cyan); }
+    .admin-main { padding:32px 28px; overflow-y:auto; }
+    .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:24px; flex-wrap:wrap; gap:12px; }
+    .admin-header h2 { font-size:1.3rem; font-weight:900; text-transform:uppercase; letter-spacing:2px; }
+    .tab-panel { display:none; } .tab-panel.active { display:block; animation:fadeUp .3s ease; }
+    .config-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    .pool-item { display:flex; align-items:center; gap:12px; background:var(--glass); border:1px solid var(--border); border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:8px; }
+    .pool-item .pool-name { font-weight:700; flex:1; }
+    .pool-item .pool-order { color:var(--cyan); font-weight:800; min-width:24px; }
+
+    /* ── Users table ── */
+    .user-row-avatar { width:32px; height:32px; border-radius:50%; object-fit:cover; vertical-align:middle; }
+
+    /* ── Auction embedded ── */
+    .auc-wrap { display:grid; grid-template-columns:300px 1fr 300px; height:calc(100vh - 120px); min-height:500px; }
+    .owner-panel { display:flex; flex-direction:column; border-right:1px solid var(--border); background:rgba(0,0,0,.3); overflow-y:auto; }
+    .owner-panel.right { border-right:none; border-left:1px solid var(--border); }
+    .owner-header { padding:20px 18px 14px; border-bottom:1px solid var(--border); text-align:center; }
+    .owner-tag { font-size:.62rem; text-transform:uppercase; letter-spacing:3px; color:var(--muted); margin-bottom:4px; }
+    .owner-name-big { font-size:1.1rem; font-weight:900; text-transform:uppercase; letter-spacing:1px; word-break:break-word; }
+    .owner-points { font-size:2.2rem; font-weight:900; line-height:1; margin:10px 0 4px; color:var(--cyan); transition:color .3s; }
+    .points-label { font-size:.65rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); }
+    .bid-panel { padding:14px 16px; border-bottom:1px solid var(--border); }
+    .bid-panel-label { font-size:.62rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:10px; }
+    .bid-grid { display:grid; grid-template-columns:1fr 1fr; gap:6px; }
+    .bid-btn { font-family:'Outfit',sans-serif; font-weight:800; font-size:.8rem; padding:9px 4px; border-radius:var(--radius-sm); background:rgba(69,243,255,.07); border:1px solid rgba(69,243,255,.2); color:var(--cyan); cursor:pointer; transition:all .2s; text-align:center; white-space:nowrap; }
+    .bid-btn:hover { background:var(--cyan); color:#000; box-shadow:0 0 16px rgba(69,243,255,.4); transform:translateY(-1px); }
+    .bid-btn.right { background:rgba(255,0,124,.07); border-color:rgba(255,0,124,.2); color:var(--pink); }
+    .bid-btn.right:hover { background:var(--pink); color:#fff; box-shadow:0 0 16px rgba(255,0,124,.4); }
+    .roster-section { padding:14px 18px; flex:1; }
+    .roster-label { font-size:.62rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-bottom:8px; }
+    .roster-item { display:flex; align-items:center; justify-content:space-between; padding:7px 10px; background:var(--glass); border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:5px; font-size:.82rem; animation:fadeUp .3s ease; }
+    .roster-item .ri-name { font-weight:700; }
+    .roster-item .ri-pts { color:var(--muted); font-size:.72rem; }
+    .center-stage { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; text-align:center; position:relative; overflow:hidden; }
+    .center-stage::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center,rgba(255,0,124,.06) 0%,transparent 70%); pointer-events:none; }
+    .on-block-tag { font-size:.62rem; text-transform:uppercase; letter-spacing:4px; color:var(--muted); margin-bottom:14px; border:1px solid var(--border); padding:4px 16px; border-radius:99px; }
+    .team-logo-big { width:130px; height:130px; border-radius:18px; border:2px solid rgba(255,255,255,.1); object-fit:cover; background:var(--glass2); display:flex; align-items:center; justify-content:center; font-size:3.5rem; margin:12px auto; box-shadow:0 0 50px rgba(255,0,124,.12); transition:box-shadow .4s; }
+    .team-logo-big.bidding { box-shadow:0 0 70px rgba(255,0,124,.4); }
+    .team-name-stage { font-size:clamp(1.3rem,2.5vw,2rem); font-weight:900; text-transform:uppercase; letter-spacing:3px; margin-bottom:6px; }
+    .bid-label-stage { font-size:.65rem; text-transform:uppercase; letter-spacing:3px; color:var(--muted); }
+    .bid-amount-stage { font-size:clamp(2.5rem,5vw,4rem); font-weight:900; line-height:1; color:var(--pink); margin:6px 0 4px; text-shadow:0 0 30px rgba(255,0,124,.4); transition:all .3s; }
+    .bid-by-stage { color:var(--cyan); font-weight:700; font-size:.9rem; min-height:22px; }
+    .sold-btn { margin-top:20px; padding:14px 48px; font-size:1.1rem; font-weight:900; letter-spacing:3px; text-transform:uppercase; border:none; border-radius:var(--radius-sm); background:var(--pink); color:#fff; cursor:pointer; font-family:'Outfit',sans-serif; box-shadow:0 0 30px rgba(255,0,124,.35); transition:all .2s; animation:pulse-btn 2s infinite; }
+    .sold-btn:hover { transform:scale(1.04); }
+    .sold-btn:disabled { opacity:.35; animation:none; cursor:not-allowed; transform:none; }
+    .skip-btn { margin-top:8px; padding:8px 20px; border-radius:var(--radius-sm); background:transparent; border:1px solid var(--border); color:var(--muted); cursor:pointer; font-family:'Outfit',sans-serif; font-size:.8rem; transition:all .2s; }
+    .skip-btn:hover { border-color:var(--muted); color:var(--text); }
+    @keyframes pulse-btn { 0%,100%{box-shadow:0 0 25px rgba(255,0,124,.35);} 50%{box-shadow:0 0 50px rgba(255,0,124,.65);} }
+    .live-dot { width:8px; height:8px; border-radius:50%; background:var(--pink); box-shadow:0 0 8px var(--pink); animation:pulse 1.5s infinite; display:inline-block; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
+
+    /* ── Bid Timer ── */
+    .timer-wrap { position:relative; width:120px; height:120px; margin:16px auto 4px; flex-shrink:0; }
+    .timer-svg { transform:rotate(-90deg); width:120px; height:120px; }
+    .timer-track { fill:none; stroke:rgba(255,255,255,.07); stroke-width:6; }
+    .timer-ring  { fill:none; stroke:var(--cyan); stroke-width:6; stroke-linecap:round; transition:stroke-dashoffset .9s linear, stroke .3s; stroke-dasharray:339.3; stroke-dashoffset:0; }
+    .timer-ring.danger { stroke:var(--pink); filter:drop-shadow(0 0 6px var(--pink)); }
+    .timer-num { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+    .timer-val { font-size:2rem; font-weight:900; line-height:1; color:var(--cyan); transition:color .3s; }
+    .timer-val.danger { color:var(--pink); animation:blink-red .5s infinite alternate; }
+    .timer-label-sm { font-size:.55rem; text-transform:uppercase; letter-spacing:2px; color:var(--muted); margin-top:2px; }
+    .timer-wrap.hidden { display:none; }
+    @keyframes blink-red { from{opacity:1;} to{opacity:.5;} }
+
+    /* ── Bracket ── */
+    .bracket-wrap { overflow-x: auto; overflow-y: visible; padding: 8px 0 24px; }
+
+    /* One column per round, all equal height */
+    .bracket-rounds {
+      display: flex;
+      gap: 0;
+      align-items: stretch;
+      min-width: max-content;
+    }
+
+    .bracket-round {
+      display: flex;
+      flex-direction: column;
+      min-width: 210px;
+      max-width: 210px;
+    }
+
+    .bracket-round-label {
+      font-size: .62rem; text-transform: uppercase; letter-spacing: 2px;
+      color: var(--muted); text-align: center; padding: 0 12px 14px;
+      font-weight: 700; flex-shrink: 0;
+    }
+
+    /* Stretch column fills total bracket height */
+    .bracket-round-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+
+    /* Each cell occupies an equal slice of the column height */
+    .bracket-cell {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Right-side connector: a half-height vertical bar + horizontal stub */
+    .bracket-cell::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 25%;
+      height: 50%;
+      width: 13px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      border-left: none;
+      pointer-events: none;
+    }
+    .bracket-round:last-child .bracket-cell::after { display: none; }
+
+    /* Left-side incoming connector stub */
+    .bracket-cell::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 13px;
+      height: 1px;
+      background: var(--border);
+      pointer-events: none;
+    }
+    .bracket-round:first-child .bracket-cell::before { display: none; }
+
+    /* The actual match card */
+    .bracket-match {
+      margin: 6px 13px 6px 13px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--glass2);
+      overflow: hidden;
+      transition: border-color .2s, box-shadow .2s;
+      flex-shrink: 0;
+    }
+    .bracket-round:first-child .bracket-match { margin-left: 0; }
+    .bracket-round:last-child  .bracket-match { margin-right: 0; }
+    .bracket-match:hover { border-color: rgba(69,243,255,.25); }
+
+    /* Finals glow */
+    .bracket-final .bracket-match {
+      border-color: rgba(251,191,36,.35);
+      box-shadow: 0 0 24px rgba(251,191,36,.1);
+    }
+
+    /* Team row inside a match */
+    .bracket-team {
+      display: flex; align-items: center; gap: 7px;
+      padding: 8px 10px;
+      font-size: .8rem; font-weight: 600;
+      border-bottom: 1px solid var(--border);
+      transition: background .15s;
+      cursor: default;
+    }
+    .bracket-team:last-child { border-bottom: none; }
+
+    .bracket-team.winner {
+      background: rgba(69,243,255,.09);
+      color: var(--cyan); font-weight: 800;
+    }
+    .bracket-team.loser {
+      opacity: .38;
+    }
+    .bracket-team.tbd { color: var(--muted); font-style: italic; }
+
+    /* Clickable for admin */
+    .bracket-team.pick { cursor: pointer; }
+    .bracket-team.pick:hover         { background: rgba(69,243,255,.13); }
+    .bracket-team.pick.o2:hover      { background: rgba(255,0,124,.09); }
+
+    .bracket-team-logo {
+      width: 18px; height: 18px; border-radius: 3px;
+      object-fit: cover; flex-shrink: 0;
+      background: var(--glass2);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: .55rem;
+    }
+    .bracket-owner-dot {
+      width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+    }
+    .bracket-team-name {
+      flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+
+    /* BYE cell — invisible placeholder that keeps grid alignment */
+    .bracket-bye { visibility: hidden; pointer-events: none; }
+
+    /* Mobile: stack rounds */
+    @media (max-width: 700px) {
+      .bracket-rounds { flex-direction: column; align-items: stretch; }
+      .bracket-round  { max-width: 100%; min-width: 0; }
+      .bracket-round-body { flex-direction: row; flex-wrap: wrap; gap: 8px; padding: 0 0 8px; }
+      .bracket-cell   { flex: none; width: calc(50% - 4px); }
+      .bracket-cell::before, .bracket-cell::after { display: none; }
+    }
+
+    /* ── Mobile tabs ── */
+    .mobile-tabs { display:none; position:fixed; bottom:0; left:0; right:0; z-index:900; background:rgba(8,10,15,.95); backdrop-filter:blur(20px); border-top:1px solid var(--border); padding:8px 0; }
+    .mobile-tabs nav { display:flex; justify-content:space-around; }
+    .mobile-tab { display:flex; flex-direction:column; align-items:center; gap:2px; padding:8px 12px; background:transparent; border:none; cursor:pointer; color:var(--muted); font-family:'Outfit',sans-serif; font-size:.6rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; transition:color .2s; }
+    .mobile-tab .mt-icon { font-size:1.1rem; }
+    .mobile-tab.active, .mobile-tab:hover { color:var(--cyan); }
+
+    @media (max-width:900px) {
+      .prize-grid { grid-template-columns:1fr; }
+      .admin-layout { grid-template-columns:1fr; }
+      .sidebar { flex-direction:row; flex-wrap:wrap; padding:10px; }
+      .sidebar-section { display:none; }
+      .auc-wrap { grid-template-columns:1fr; height:auto; }
+      .mobile-tabs { display:block; }
+      body { padding-bottom:72px; }
+      .config-grid { grid-template-columns:1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="ambient"></div>
+
+<!-- ── PWA Install Banner ── -->
+<div id="pwa-banner" style="display:none;position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:9998;width:calc(100% - 32px);max-width:420px;background:linear-gradient(135deg,#0d1017,#111827);border:1px solid rgba(69,243,255,.3);border-radius:14px;padding:14px 18px;box-shadow:0 8px 32px rgba(0,0,0,.6);backdrop-filter:blur(20px);display:none;align-items:center;gap:12px;">
+  <div style="width:40px;height:40px;border-radius:10px;background:rgba(69,243,255,.1);border:1px solid rgba(69,243,255,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.3rem;">⚡</div>
+  <div style="flex:1;min-width:0;">
+    <div style="font-weight:800;font-size:.9rem;color:var(--text);">Install ICEBERG Showdown</div>
+    <div style="font-size:.75rem;color:var(--muted);margin-top:2px;">Add to home screen for quick access</div>
+  </div>
+  <button id="pwa-install-btn" style="font-family:'Outfit',sans-serif;font-weight:800;font-size:.8rem;letter-spacing:1px;text-transform:uppercase;padding:8px 16px;border-radius:8px;background:var(--cyan);color:#000;border:none;cursor:pointer;white-space:nowrap;flex-shrink:0;">Install</button>
+  <button onclick="dismissPWA()" style="background:transparent;border:none;color:var(--muted);font-size:1.2rem;cursor:pointer;padding:2px;flex-shrink:0;line-height:1;">✕</button>
+</div>
+
+<!-- ── NAVBAR ── -->
+<header class="navbar">
+  <a class="navbar-brand" href="#" onclick="goHomeGlobal();return false;"><span class="brand-icon">⚡</span> SHOWDOWN</a>
+  <ul class="navbar-links" id="nav-links">
+    <li><a href="#" onclick="goHomeGlobal();return false;">Home</a></li>
+    <li id="nav-superadmin-li" style="display:none;"><a href="#" data-page="super-admin">Admin</a></li>
+  </ul>
+  <div class="navbar-right" id="nav-right"></div>
+</header>
+
+
+<!-- ══════════ TOURNAMENTS (HOME) ══════════ -->
+<div id="page-tournaments" class="page active" style="display:block;">
+  <div style="min-height:100vh;display:flex;flex-direction:column;position:relative;">
+    <div class="hero-bg"></div>
+    <div style="position:relative;z-index:1;padding:60px 24px 30px;text-align:center;">
+      <div class="hero-badge">SELECT AN EVENT</div>
+      <h1 style="font-size:clamp(2.5rem,6vw,4.5rem);font-weight:900;letter-spacing:-1px;line-height:1.1;margin:16px 0 8px;background:linear-gradient(135deg,#fff 20%,var(--cyan) 60%,var(--pink) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">ICEBERG<br>Tournaments</h1>
+      <p style="color:var(--muted);font-size:1rem;margin-bottom:32px;">Choose a tournament to register, view details, or watch the live auction.</p>
+      <div id="admin-create-wrap" style="display:none;margin-bottom:20px;">
+        <button class="btn btn-primary" onclick="document.getElementById('quick-create-form').style.display=document.getElementById('quick-create-form').style.display==='block'?'none':'block'">+ Create Tournament</button>
+        <form id="quick-create-form" style="display:none;max-width:480px;margin:16px auto 0;background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:24px;text-align:left;" onsubmit="createTournament(event)">
+          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" data-field="title" class="form-input" required placeholder="e.g. September Showdown 2026"></div>
+          <div class="form-group"><label class="form-label">Status</label><select data-field="status" class="form-input"><option value="upcoming">Upcoming</option><option value="registrations_open">Registrations Open</option><option value="draft">Draft Phase</option><option value="live">Live</option></select></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="form-group"><label class="form-label">Start Date</label><input type="datetime-local" data-field="date" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">End Date</label><input type="datetime-local" data-field="end_date" class="form-input"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+            <div class="form-group"><label class="form-label">Max Teams</label><input type="number" data-field="max_teams" class="form-input" value="16" min="2"></div>
+            <div class="form-group"><label class="form-label">Prize Pool (₹)</label><input type="number" data-field="prize_pool" class="form-input" placeholder="10000"></div>
+          </div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('quick-create-form').style.display='none'">Cancel</button>
+            <button type="submit" class="btn btn-sm" style="background:linear-gradient(135deg,var(--cyan),var(--purple));color:#000;">Create</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div style="position:relative;z-index:1;flex:1;padding:0 24px 60px;max-width:1100px;margin:0 auto;width:100%;">
+      <div id="tournaments-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:20px;"><div style="text-align:center;color:var(--muted);padding:40px;grid-column:1/-1;">Loading events...</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ TOURNAMENT DETAIL PAGE ══════════ -->
+<div id="page-home" class="page">
+  <div id="error-banner" style="display:none;position:relative;z-index:1;max-width:600px;margin:20px auto 0;">
+    <div class="error-banner"><span>⚠</span> <span id="error-text"></span></div>
+  </div>
+
+  <!-- Tournament Detail Header -->
+  <div style="background:var(--bg2);border-bottom:1px solid var(--border);">
+    <div class="container" style="padding:24px 24px 0;">
+      <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap;">
+        <div style="flex:1;min-width:200px;">
+          <div style="font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--muted);margin-bottom:6px;">TOURNAMENT</div>
+          <h1 class="hero-title" id="hero-title" style="font-size:2rem;margin:0 0 8px;">Tournament</h1>
+          <div id="t-detail-meta" style="color:var(--muted);font-size:.85rem;display:flex;gap:16px;flex-wrap:wrap;"></div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;padding-top:8px;">
+          <div id="t-detail-status" class="badge badge-approved">UPCOMING</div>
+        </div>
+      </div>
+
+      <!-- Inner Tabs -->
+      <div style="display:flex;gap:0;margin-top:24px;overflow-x:auto;">
+        <button class="t-inner-tab active" data-itab="overview" onclick="switchInnerTab(this,'overview')">🏠 Overview</button>
+        <button class="t-inner-tab" data-itab="register" onclick="switchInnerTab(this,'register')">📝 Register</button>
+        <button class="t-inner-tab" data-itab="hub" onclick="switchInnerTab(this,'hub')">📊 Tournament Hub</button>
+        <button class="t-inner-tab" id="bracket-inner-tab" data-itab="bracket" onclick="switchInnerTab(this,'bracket')" style="display:none;">⚔️ Bracket</button>
+        <button class="t-inner-tab auction-only-tab" id="auction-inner-tab" data-itab="auction" onclick="switchInnerTab(this,'auction')" style="display:none;">🎙 Live Auction</button>
+        <button class="t-inner-tab" id="admin-inner-tab" data-itab="admin-panel" onclick="switchInnerTab(this,'admin-panel')" style="display:none;">🛡️ Moderation</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── OVERVIEW TAB ── -->
+  <div id="itab-overview" class="inner-tab-panel active">
+    <div class="container" style="padding:32px 24px;">
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:32px;" id="t-overview-cards">
+        <div class="card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:10px;">🏆</div><h3 style="margin-bottom:6px;">Prize Pool</h3><p id="t-prize-display" style="color:var(--muted);font-size:.9rem;">₹5k · ₹3k · ₹2k placement prizes + ₹5k shared special awards pool</p></div>
+        <div class="card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:10px;">🎲</div><h3 style="margin-bottom:6px;">Live Auction Draft</h3><p style="color:var(--muted);font-size:.9rem;">Two owners bid 1,00,000 points to draft teams — live on stream</p></div>
+        <div class="card" style="text-align:center;"><div style="font-size:2rem;margin-bottom:10px;">🛡️</div><h3 style="margin-bottom:6px;">5v5 Format</h3><p style="color:var(--muted);font-size:.9rem;">Full MLBB teams of 5. Register with logo and in-game names.</p></div>
+      </div>
+      <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+        <button class="btn btn-primary" onclick="switchInnerTabById('register')">📝 Register Your Team</button>
+        <button class="btn btn-secondary" onclick="switchInnerTabById('hub')">📊 View Tournament Hub</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── REGISTER TAB ── -->
+  <div id="itab-register" class="inner-tab-panel">
+    <div class="container-sm" style="padding:20px 24px 40px;">
+      <div id="reg-needs-login" class="gate" style="display:none;">
+        <div class="gate-icon">🔐</div><h2>Login Required</h2>
+        <p>Login with Discord to register your team.</p>
+        <a href="/auth/discord" class="btn btn-discord">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.114 18.1.133 18.114a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+          Login with Discord
+        </a>
+      </div>
+      <div id="reg-not-member" class="gate" style="display:none;">
+        <div class="gate-icon">🚫</div><h2>Not in ICEBERG</h2>
+        <p>Join <a href="https://discord.gg/C7FdRrtqHU" target="_blank" style="color:var(--cyan);">ICEBERG Discord ↗</a> first, then try again.</p>
+        <a href="/auth/logout" class="btn btn-secondary">Try Different Account</a>
+      </div>
+      <div id="reg-already" style="display:none;">
+        <div class="team-status-card">
+          <div style="font-size:2.5rem;margin-bottom:8px;">✅</div><h2>Team Registered!</h2>
+          <div class="ts-name" id="reg-team-name">—</div>
+          <div id="reg-team-status-badge" style="margin:10px 0;"></div>
+          <div class="ts-players" id="reg-team-players"></div>
+          <p style="color:var(--muted);margin-top:16px;font-size:.85rem;">You'll be notified when your team is reviewed.</p>
+        </div>
+      </div>
+      <div id="reg-form-wrap" style="display:none;">
+        <div id="spots-bar" style="margin-bottom:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+            <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);">Spots Filled</span>
+            <span id="spots-count" style="font-size:.85rem;font-weight:800;color:var(--cyan);">0 / 16</span>
+          </div>
+          <div style="background:rgba(255,255,255,.06);border-radius:99px;height:4px;overflow:hidden;">
+            <div id="spots-progress" style="height:100%;background:linear-gradient(90deg,var(--cyan),var(--pink));border-radius:99px;transition:width .5s ease;width:0%;"></div>
+          </div>
+        </div>
+        <form id="reg-form">
+          <div class="form-group"><label class="form-label">Team Name</label><input class="form-input" id="f-team-name" type="text" required maxlength="40" /></div>
+          <div class="form-group">
+            <label class="form-label">Team Logo</label>
+            <input class="form-input" id="f-logo" type="file" accept="image/png,image/jpeg,image/webp" />
+            <p style="color:var(--muted);font-size:.75rem;margin-top:6px;">PNG only, 2MB max.</p>
+          </div>
+          <label style="display:flex;align-items:flex-start;gap:10px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:24px;cursor:pointer;">
+            <input type="checkbox" id="dm-consent" style="margin-top:3px;accent-color:var(--cyan);" />
+            <span style="color:var(--muted);font-size:.82rem;line-height:1.6;">By registering, every player listed below may receive match-related DMs from the tournament's Discord bot.</span>
+          </label>
+          <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px;">Captain</div>
+          <div id="captain-wrap"></div>
+          <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin:20px 0 12px;">Roster (Players 2–5)</div>
+          <div id="players-wrap"></div>
+          <button type="submit" id="reg-submit-btn" class="btn btn-full" style="margin-top:16px;background:linear-gradient(135deg,#6d28d9,var(--pink));color:#fff;font-size:1rem;padding:16px;letter-spacing:1px;">Confirm Registration</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HUB TAB ── -->
+  <div id="itab-hub" class="inner-tab-panel">
+    <div class="container" style="padding:32px 24px;">
+      <div class="prize-grid" id="hub-prize-cards">
+        <div class="prize-card gold"><div class="prize-rank">1st Place</div><div class="prize-trophy">🥇</div><div class="prize-amount">₹5,000</div></div>
+        <div class="prize-card silver"><div class="prize-rank">2nd Place</div><div class="prize-trophy">🥈</div><div class="prize-amount">₹3,000</div></div>
+        <div class="prize-card bronze"><div class="prize-rank">3rd Place</div><div class="prize-trophy">🥉</div><div class="prize-amount">₹2,000</div></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+        <h2 style="font-size:1.1rem;text-transform:uppercase;letter-spacing:2px;color:var(--purple);margin:0;">Special Awards</h2>
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(168,85,247,.08);border:1px solid rgba(168,85,247,.25);border-radius:99px;padding:8px 20px;">
+          <span style="font-size:1rem;">🏅</span>
+          <span style="font-size:.78rem;font-weight:700;color:var(--purple);letter-spacing:1px;">Shared Prize Pool</span>
+          <span style="font-size:1.1rem;font-weight:900;color:#fff;" id="hub-special-pool">₹5,000</span>
+        </div>
+      </div>
+      <div class="special-grid">
+        <div class="special-card"><div class="sc-icon">⭐</div><div class="sc-title">MVP / Best Player</div></div>
+        <div class="special-card"><div class="sc-icon">💀</div><div class="sc-title">Most Kills</div></div>
+        <div class="special-card"><div class="sc-icon">🔥</div><div class="sc-title">Savage Award</div></div>
+        <div class="special-card"><div class="sc-icon">⚡</div><div class="sc-title">Maniac Award</div></div>
+        <div class="special-card"><div class="sc-icon">👁️</div><div class="sc-title">Best Viewers</div></div>
+        <div class="special-card"><div class="sc-icon">👑</div><div class="sc-title">Best Leaders</div></div>
+      </div>
+      <p style="color:var(--muted);font-size:.82rem;margin-top:12px;text-align:center;">₹5,000 shared across all special award winners.</p>
+      <hr class="divider" />
+      <div id="hub-teams-section"></div>
+    </div>
+  </div>
+
+  <!-- ── AUCTION TAB ── -->
+  <div id="itab-auction" class="inner-tab-panel">
+    <!-- The full auction UI is injected here when the tab is activated -->
+    <div id="auction-inner-mount"></div>
+  </div>
+
+  <!-- ── BRACKET TAB ── -->
+  <div id="itab-bracket" class="inner-tab-panel">
+    <div class="container" style="padding:32px 24px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+        <h2 style="font-size:1.1rem;text-transform:uppercase;letter-spacing:2px;margin:0;">⚔️ Match Bracket</h2>
+        <div id="bracket-admin-controls" style="display:none;gap:8px;">
+          <button class="btn btn-primary btn-sm" onclick="generateBracket()">🎲 Generate Bracket</button>
+          <button class="btn btn-secondary btn-sm" onclick="generateBracket(true)">↺ Regenerate</button>
+        </div>
+      </div>
+      <div id="bracket-section">
+        <div class="card" style="text-align:center;padding:40px;">
+          <div style="font-size:2.5rem;margin-bottom:12px;">📅</div>
+          <p style="color:var(--muted);">The bracket will be revealed after the live auction concludes.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── ADMIN / MODERATION TAB ── -->
+  <div id="itab-admin-panel" class="inner-tab-panel">
+    <div id="admin-inner-wrap"><!-- mirrored from page-admin, injected by JS --></div>
+  </div>
+</div>
+
+<!-- ══════════ ADMIN PANEL (full-page, admin navbar link) ══════════ -->
+<div id="page-admin" class="page" style="display:none;">
+  <div class="admin-layout" id="admin-layout-inner">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-section">Management</div>
+      <button class="sidebar-link active" data-atab="tournaments">🏆 Tournaments</button>
+      <button class="sidebar-link" data-atab="registrations">📋 Registrations</button>
+      <button class="sidebar-link" data-atab="auction-config">⚙️ Auction Setup</button>
+      <button class="sidebar-link" data-atab="auction-pool">🎲 Auction Pool</button>
+    </aside>
+    <!-- Content -->
+    <main class="admin-main">
+      <!-- Tournament context banner -->
+      <div id="admin-tournament-banner" style="display:none;background:rgba(69,243,255,.08);border:1px solid rgba(69,243,255,.2);border-radius:10px;padding:10px 16px;margin-bottom:20px;font-size:.85rem;color:var(--cyan);font-weight:700;"></div>
+
+      <!-- Tournaments -->
+      <div id="atab-tournaments" class="tab-panel active">
+        <div class="admin-header">
+          <h2>Tournament Details</h2>
+          <button class="btn btn-secondary btn-sm" id="edit-tournament-btn" onclick="openEditTournamentForm()">✎ Edit</button>
+        </div>
+
+        <!-- Edit form — hidden by default -->
+        <form id="edit-tournament-form" style="display:none;background:var(--bg2);padding:24px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border);" onsubmit="saveEditTournament(event)">
+          <h4 style="margin-bottom:20px;color:var(--cyan);">Edit Tournament</h4>
+          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" id="edit-field-title" class="form-input" required placeholder="e.g. September Showdown 2026"></div>
+          <div class="form-group"><label class="form-label">Status</label><select id="edit-field-status" class="form-input"><option value="upcoming">Upcoming</option><option value="registrations_open">Registrations Open</option><option value="draft">Draft Phase</option><option value="live">Live</option><option value="concluded">Concluded</option></select></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label class="form-label">Start Date</label><input type="datetime-local" id="edit-field-date" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">End Date</label><input type="datetime-local" id="edit-field-end_date" class="form-input"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label class="form-label">Game</label><select id="edit-field-game" class="form-input"><option value="mlbb">Mobile Legends: Bang Bang</option><option value="valorant">Valorant</option></select></div>
+            <div class="form-group"><label class="form-label">Prize Pool (₹)</label><input type="number" id="edit-field-prize_pool" class="form-input" placeholder="e.g. 10000"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Max Teams</label><input type="number" id="edit-field-max_teams" class="form-input" min="2"></div>
+          <div class="form-group"><label class="form-label">Discord Server Invite URL</label><input type="text" id="edit-field-discord_url" class="form-input" placeholder="https://discord.gg/..."></div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('edit-tournament-form').style.display='none'">Cancel</button>
+            <button type="submit" class="btn btn-sm" style="background:linear-gradient(135deg,var(--cyan),var(--purple));color:#000;">Save Changes</button>
+          </div>
+        </form>
+
+        <div id="tournament-detail-card" class="card" style="padding:24px;"></div>
+      </div>
+
+      <!-- Registrations -->
+      <div id="atab-registrations" class="tab-panel">
+        <div class="admin-header">
+          <h2>Registrations</h2>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <button class="btn btn-secondary btn-sm" onclick="loadTeams()">&#8635; Refresh</button>
+            <div style="display:flex;align-items:center;gap:6px;background:rgba(251,191,36,.07);border:1px solid rgba(251,191,36,.25);border-radius:8px;padding:6px 12px;">
+              <span style="font-size:.75rem;color:var(--gold);font-weight:700;">&#127922; Dummies:</span>
+              <select id="dummy-count" style="background:#0d1117;border:1px solid var(--border);border-radius:6px;color:var(--text);font-size:.82rem;padding:2px 6px;">
+                <option value="4">4</option><option value="8" selected>8</option>
+                <option value="12">12</option><option value="16">16</option><option value="20">20</option>
+              </select>
+              <button class="btn btn-sm" style="background:rgba(251,191,36,.15);color:var(--gold);border:1px solid rgba(251,191,36,.3);" onclick="seedDummies()">+ Add</button>
+              <button class="btn btn-sm" style="background:rgba(255,0,124,.08);color:var(--pink);border:1px solid rgba(255,0,124,.3);" onclick="clearDummies()">&#128465; Clear</button>
+            </div>
+          </div>
+        </div>
+        <div class="stats-row" id="reg-stats"></div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="table-wrap">
+            <table id="teams-table">
+              <thead><tr><th>Team</th><th>Captain</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="teams-tbody"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:40px;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Auction Setup -->
+      <div id="atab-auction-config" class="tab-panel">
+        <div class="admin-header"><h2>Auction Setup</h2></div>
+        <div class="card" style="max-width:560px;">
+          <h3 style="margin-bottom:20px;color:var(--cyan);">Owner Configuration</h3>
+          <div class="config-grid">
+            <div class="form-group"><label class="form-label">Owner 1 Name</label><input class="form-input" id="cfg-o1-name" type="text" placeholder="Owner 1" /></div>
+            <div class="form-group"><label class="form-label">Owner 2 Name</label><input class="form-input" id="cfg-o2-name" type="text" placeholder="Owner 2" /></div>
+          </div>
+          <div class="config-grid">
+            <div class="form-group">
+              <label class="form-label">Owner 1 Discord Username</label>
+              <input class="form-input" id="cfg-o1-discord" type="text" placeholder="e.g. tankytank" />
+              <p style="color:var(--muted);font-size:.75rem;margin-top:5px;">Exact Discord username (no @). This user can place bids as Owner 1.</p>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Owner 2 Discord Username</label>
+              <input class="form-input" id="cfg-o2-discord" type="text" placeholder="e.g. playerone" />
+              <p style="color:var(--muted);font-size:.75rem;margin-top:5px;">Exact Discord username (no @). This user can place bids as Owner 2.</p>
+            </div>
+          </div>
+          <div class="form-group"><label class="form-label">Starting Points Each</label><input class="form-input" id="cfg-points" type="number" value="100000" min="1000" step="1000" /></div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;">
+            <button class="btn btn-primary" onclick="saveConfig()">Save Config</button>
+            <button class="btn btn-danger" onclick="resetAuction()">⚠ Reset Auction</button>
+          </div>
+          <p style="color:var(--muted);font-size:.82rem;margin-top:12px;">Resetting rebuilds the team pool from approved registrations and clears all bids.</p>
+        </div>
+        <div class="card" style="max-width:560px;margin-top:20px;">
+          <h3 style="margin-bottom:16px;color:var(--cyan);">Current State</h3>
+          <div id="auction-state-info" style="color:var(--muted);">Loading...</div>
+        </div>
+      </div>
+
+      <!-- Auction Pool -->
+      <div id="atab-auction-pool" class="tab-panel">
+        <div class="admin-header"><h2>Auction Pool</h2><button class="btn btn-secondary btn-sm" onclick="loadAuctionState()">↻ Refresh</button></div>
+        <div class="info-banner"><span>ℹ</span> Only <strong>approved</strong> teams appear in the auction pool.</div>
+        <div id="pool-wrap"><div style="color:var(--muted);">Loading...</div></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ══════════ AUCTION ══════════ -->
+<div id="page-auction" class="page" style="display:none;">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;background:rgba(0,0,0,.6);border-bottom:1px solid var(--border);">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span class="live-dot"></span>
+      <span style="font-size:.8rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--pink);">Live Auction</span>
+      <span style="color:var(--muted);font-size:.8rem;">— ICEBERG MLBB Showdown</span>
+    </div>
+    <button class="btn btn-secondary btn-sm" onclick="loadState()">↻ Sync</button>
+  </div>
+  <div class="auc-wrap">
+    <!-- Owner 1 -->
+    <div class="owner-panel">
+      <div class="owner-header">
+        <div class="owner-tag">Owner</div>
+        <div class="owner-name-big" id="o1-name">Owner 1</div>
+        <div class="owner-points" id="o1-pts">1,00,000</div>
+        <div class="points-label">Points Remaining</div>
+      </div>
+      <!-- Bid controls: shown to admins only -->
+      <div class="bid-panel" id="o1-bid-panel">
+        <div class="bid-panel-label">Place Bid</div>
+        <div class="bid-grid">
+          <button class="bid-btn" onclick="bid(1,1000)">+1,000</button>
+          <button class="bid-btn" onclick="bid(1,5000)">+5,000</button>
+          <button class="bid-btn" onclick="bid(1,10000)">+10,000</button>
+          <button class="bid-btn" onclick="bid(1,25000)">+25,000</button>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <input id="o1-custom-amt" type="number" min="1" step="1"
+            placeholder="Custom amount"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            style="flex:1;min-width:0;padding:9px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(69,243,255,.2);border-radius:var(--radius-sm);color:var(--text);font-family:'Outfit',sans-serif;font-size:.82rem;outline:none;"
+            onkeydown="if(event.key==='Enter') bidCustom(1)" />
+          <button class="bid-btn" style="padding:9px 14px;white-space:nowrap;" onclick="bidCustom(1)">+ Bid</button>
+        </div>
+      </div>
+      <!-- Spectator label: shown to non-admins -->
+      <div id="o1-spectator-note" style="display:none;padding:14px 18px;border-bottom:1px solid var(--border);">
+        <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);text-align:center;">👁 Spectator View</div>
+      </div>
+      <div class="roster-section"><div class="roster-label">Acquired Teams</div><div id="o1-roster"></div></div>
+    </div>
+    <!-- Center stage -->
+    <div class="center-stage" id="center-stage">
+      <div class="on-block-tag" id="stage-tag">Waiting to begin...</div>
+      <div class="team-logo-big" id="team-logo">🛡️</div>
+      <div class="team-name-stage" id="team-name">—</div>
+      <div class="bid-label-stage">Current Highest Bid</div>
+      <div class="bid-amount-stage" id="bid-amount">0</div>
+      <div class="bid-by-stage" id="bid-by">&nbsp;</div>
+      <!-- Bid Timer -->
+      <div class="timer-wrap hidden" id="timer-wrap">
+        <svg class="timer-svg" viewBox="0 0 120 120">
+          <circle class="timer-track" cx="60" cy="60" r="54"/>
+          <circle class="timer-ring" id="timer-ring" cx="60" cy="60" r="54"/>
+        </svg>
+        <div class="timer-num">
+          <span class="timer-val" id="timer-val">60</span>
+          <span class="timer-label-sm">seconds</span>
+        </div>
+      </div>
+      <!-- Admin controls: shown to admins only -->
+      <div id="auction-admin-controls">
+        <button class="sold-btn" id="sold-btn" onclick="sold()" disabled>SOLD!</button>
+        <button class="skip-btn" id="skip-btn" onclick="skipTeam()">Skip Team →</button>
+      </div>
+    </div>
+    <!-- Owner 2 -->
+    <div class="owner-panel right">
+      <div class="owner-header">
+        <div class="owner-tag">Owner</div>
+        <div class="owner-name-big" id="o2-name">Owner 2</div>
+        <div class="owner-points" id="o2-pts">1,00,000</div>
+        <div class="points-label">Points Remaining</div>
+      </div>
+      <!-- Bid controls: shown to admins only -->
+      <div class="bid-panel" id="o2-bid-panel">
+        <div class="bid-panel-label">Place Bid</div>
+        <div class="bid-grid">
+          <button class="bid-btn right" onclick="bid(2,1000)">+1,000</button>
+          <button class="bid-btn right" onclick="bid(2,5000)">+5,000</button>
+          <button class="bid-btn right" onclick="bid(2,10000)">+10,000</button>
+          <button class="bid-btn right" onclick="bid(2,25000)">+25,000</button>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:10px;">
+          <input id="o2-custom-amt" type="number" min="1" step="1"
+            placeholder="Custom amount"
+            oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+            style="flex:1;min-width:0;padding:9px 10px;background:rgba(0,0,0,.3);border:1px solid rgba(255,0,124,.2);border-radius:var(--radius-sm);color:var(--text);font-family:'Outfit',sans-serif;font-size:.82rem;outline:none;"
+            onkeydown="if(event.key==='Enter') bidCustom(2)" />
+          <button class="bid-btn right" style="padding:9px 14px;white-space:nowrap;" onclick="bidCustom(2)">+ Bid</button>
+        </div>
+      </div>
+      <!-- Spectator label: shown to non-admins -->
+      <div id="o2-spectator-note" style="display:none;padding:14px 18px;border-bottom:1px solid var(--border);">
+        <div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);text-align:center;">👁 Spectator View</div>
+      </div>
+      <div class="roster-section"><div class="roster-label">Acquired Teams</div><div id="o2-roster"></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ SUPER ADMIN PANEL (navbar "Admin" link) ══════════ -->
+<div id="page-super-admin" class="page" style="display:none;">
+  <div class="admin-layout">
+    <aside class="sidebar">
+      <div class="sidebar-section">Global Admin</div>
+      <button class="sidebar-link active" data-satab="users">👥 Users</button>
+      <button class="sidebar-link" data-satab="tournaments-list">🏆 All Tournaments</button>
+    </aside>
+    <main class="admin-main">
+
+      <!-- Users -->
+      <div id="satab-users" class="tab-panel active">
+        <div class="admin-header">
+          <h2>Users</h2>
+          <button class="btn btn-secondary btn-sm" onclick="loadUsers()">↻ Refresh</button>
+        </div>
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="table-wrap">
+            <table id="users-table">
+              <thead><tr><th>User</th><th>Discord ID</th><th>Server Member</th><th>Last Seen</th><th>Role</th><th>Action</th></tr></thead>
+              <tbody id="users-tbody"><tr><td colspan="6" style="text-align:center;color:var(--muted);padding:40px;">Loading...</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- All Tournaments (create + manage) -->
+      <div id="satab-tournaments-list" class="tab-panel">
+        <div class="admin-header">
+          <h2>All Tournaments</h2>
+          <button class="btn btn-sm" onclick="document.getElementById('sa-create-form').style.display='block'">+ New Tournament</button>
+        </div>
+
+        <form id="sa-create-form" style="display:none;background:var(--bg2);padding:24px;border-radius:12px;margin-bottom:20px;border:1px solid var(--border);" onsubmit="createTournament(event)">
+          <h4 style="margin-bottom:20px;color:var(--cyan);">Create New Tournament</h4>
+          <div class="form-group"><label class="form-label">Tournament Name</label><input type="text" data-field="title" class="form-input" required placeholder="e.g. September Showdown 2026"></div>
+          <div class="form-group"><label class="form-label">Status</label><select data-field="status" class="form-input"><option value="upcoming">Upcoming</option><option value="registrations_open">Registrations Open</option><option value="draft">Draft Phase</option><option value="live">Live</option><option value="concluded">Concluded</option></select></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label class="form-label">Start Date</label><input type="datetime-local" data-field="date" class="form-input" required></div>
+            <div class="form-group"><label class="form-label">End Date</label><input type="datetime-local" data-field="end_date" class="form-input"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group"><label class="form-label">Game</label><select data-field="game" class="form-input"><option value="mlbb">Mobile Legends: Bang Bang</option><option value="valorant">Valorant</option></select></div>
+            <div class="form-group"><label class="form-label">Prize Pool (₹)</label><input type="number" data-field="prize_pool" class="form-input" placeholder="e.g. 10000"></div>
+          </div>
+          <div class="form-group"><label class="form-label">Discord Server Invite URL</label><input type="text" data-field="discord_url" class="form-input" placeholder="https://discord.gg/..."></div>
+          <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:8px;">
+            <button type="button" class="btn btn-secondary btn-sm" onclick="document.getElementById('sa-create-form').style.display='none'">Cancel</button>
+            <button type="submit" class="btn btn-sm" style="background:linear-gradient(135deg,var(--cyan),var(--purple));color:#000;">Create Tournament</button>
+          </div>
+        </form>
+
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="table-wrap">
+            <table class="table">
+              <thead><tr><th>Title</th><th>Date</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="sa-tournaments-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- Mobile Tabs -->
+<div class="mobile-tabs" id="mobile-tabs-bar">
+  <nav>
+    <button class="mobile-tab active" onclick="goHomeGlobal()"><span class="mt-icon">🏠</span>Home</button>
+  </nav>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  let currentTournamentId = null;
+  let allTournaments = [];
+
+  function loadTournaments() {
+    fetch('/api/tournaments').then(r => r.json()).then(d => {
+      allTournaments = d.tournaments || [];
+      renderTournaments();
+    }).catch(function() {
+      var wrap = document.getElementById('tournaments-list');
+      if (wrap) wrap.innerHTML = '<div style="text-align:center;color:var(--muted);padding:40px;">⚠️ Could not load tournaments. Is the server running?</div>';
+    });
+  }
+
+  function renderTournaments() {
+    const wrap = document.getElementById('tournaments-list');
+    if (!wrap) return;
+
+    // Show admin create button if admin
+    const createWrap = document.getElementById('admin-create-wrap');
+    if (createWrap && me && me.isAdmin) createWrap.style.display = 'block';
+
+    if (allTournaments.length === 0) {
+      wrap.innerHTML = '<div style="text-align:center;color:var(--muted);padding:60px;grid-column:1/-1;"><div style="font-size:3rem;margin-bottom:16px;">🏆</div><h3 style="margin-bottom:8px;">No Tournaments Yet</h3><p>' + (me && me.isAdmin ? 'Click <strong style="color:var(--cyan);">+ Create Tournament</strong> above to create your first one.' : 'Check back soon!') + '</p></div>';
+      if (typeof renderAdminTournaments === 'function') renderAdminTournaments();
+      return;
+    }
+    wrap.innerHTML = allTournaments.map(t => {
+      const date = new Date(t.date).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+      return `<div class="card" style="cursor:pointer;transition:transform 0.2s;border:1px solid var(--border);" onclick="selectTournament('${t.id}', '${t.title}')" onmouseover="this.style.transform='scale(1.02)';this.style.borderColor='var(--cyan)'" onmouseout="this.style.transform='scale(1)';this.style.borderColor='var(--border)'">
+        <div style="font-size:2.5rem;margin-bottom:12px;">🏆</div>
+        <h3 style="margin-bottom:6px;font-size:1.1rem;">${t.title}</h3>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:12px;">📅 ${date}</p>
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="badge badge-approved">${(t.status||'upcoming').replace(/_/g,' ').toUpperCase()}</span>
+          <span style="color:var(--cyan);font-size:.8rem;font-weight:700;">Enter →</span>
+        </div>
+      </div>`;
+    }).join('');
+    
+    if (typeof renderAdminTournaments === 'function') renderAdminTournaments();
+  }
+
+  function switchInnerTab(btn, tab) {
+    document.querySelectorAll('.t-inner-tab').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.inner-tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    var panel = document.getElementById('itab-' + tab);
+    if (panel) panel.classList.add('active');
+    if (tab === 'register') renderRegisterPage();
+    if (tab === 'hub') loadHub();
+    if (tab === 'bracket') { loadBracket(); stopAuctionPoll(); }
+    if (tab === 'auction') {
+      // Move the real auction page div into the inner mount
+      var mount = document.getElementById('auction-inner-mount');
+      var aPage = document.getElementById('page-auction');
+      if (mount && aPage) {
+        if (!mount.contains(aPage)) {
+          mount.innerHTML = '';
+          mount.appendChild(aPage);
+        }
+        aPage.classList.remove('page');
+        aPage.style.display = 'block';
+        aPage.style.position = 'relative';
+      }
+      applyAuctionRole(); // show/hide bid controls based on role
+      loadState(); startAuctionPoll();
+    } else if (tab === 'admin-panel') {
+      // Move admin layout into the inner tab
+      var adminMount = document.getElementById('admin-inner-wrap');
+      var adminLayout = document.getElementById('admin-layout-inner');
+      if (adminMount && adminLayout) {
+        if (!adminMount.contains(adminLayout)) {
+          adminMount.innerHTML = '';
+          adminMount.appendChild(adminLayout);
+        }
+      }
+      if (currentTournamentId) {
+        var t = allTournaments.find(function(x){return x.id===currentTournamentId;});
+        var banner = document.getElementById('admin-tournament-banner');
+        if (banner) { banner.textContent = '🎯 Managing: ' + (t ? t.title : 'Selected Tournament'); banner.style.display = 'block'; }
+      }
+      switchAdminTab('registrations');
+      stopAuctionPoll();
+    } else {
+      stopAuctionPoll();
+    }
+  }
+  function switchInnerTabById(tab) {
+    var btn = document.querySelector('.t-inner-tab[data-itab="' + tab + '"]');
+    if (btn) switchInnerTab(btn, tab);
+  }
+
+  function selectTournament(id, title) {
+    currentTournamentId = id;
+    var t = allTournaments.find(function(x) { return x.id === id; }) || {};
+    var titleEl = document.getElementById('current-tournament-title');
+    if (titleEl) titleEl.textContent = title;
+
+    var heroTitle = document.getElementById('hero-title');
+    if (heroTitle) heroTitle.textContent = title;
+
+    // Update meta info
+    var meta = document.getElementById('t-detail-meta');
+    if (meta) {
+      var dateStr = t.date ? new Date(t.date).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '';
+      var endStr  = t.end_date ? ' – ' + new Date(t.end_date).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '';
+      meta.innerHTML =
+        (dateStr ? '<span>📅 ' + dateStr + endStr + '</span>' : '') +
+        (t.game ? '<span>🎮 ' + ({mlbb:'Mobile Legends: Bang Bang',valorant:'Valorant',freefire:'Free Fire',bgmi:'BGMI'}[t.game]||t.game) + '</span>' : '<span>🎮 Mobile Legends: Bang Bang</span>') +
+        (t.max_teams ? '<span>👥 Max ' + t.max_teams + ' Teams</span>' : '') +
+        (t.prize_pool ? '<span>🏆 ₹' + Number(t.prize_pool).toLocaleString('en-IN') + ' Prize Pool</span>' : '');
+    }
+    var statusEl = document.getElementById('t-detail-status');
+    if (statusEl) { statusEl.textContent = (t.status || 'UPCOMING').replace(/_/g,' ').toUpperCase(); statusEl.className = 'badge badge-approved'; }
+
+    // Show auction tab for all logged-in members; admin inner tab only to admins
+    var auctionTab = document.getElementById('auction-inner-tab');
+    if (auctionTab) auctionTab.style.display = (me && me.user) ? '' : 'none';
+    var bracketTab = document.getElementById('bracket-inner-tab');
+    if (bracketTab) bracketTab.style.display = (me && me.user) ? '' : 'none';
+    var adminTab = document.getElementById('admin-inner-tab');
+    if (adminTab) adminTab.style.display = (me && me.isAdmin) ? '' : 'none';
+
+    // Switch to overview
+    switchInnerTabById('overview');
+
+    // Load data
+    initTournamentData();
+    showPage('home');
+  }
+
+  function initTournamentData() {
+    checkRegistration();
+    loadHub();
+    if (me && me.isAdmin) {
+      loadTeams();
+      loadAuctionState();
+    }
+  }
+
+  function checkRegistration() {
+    if (!currentTournamentId) return;
+    renderRegisterPage();
+  }
+
+  function loadHub() {
+    if (!currentTournamentId) return;
+    var t = allTournaments.find(function(x) { return x.id === currentTournamentId; }) || {};
+    var pool = Number(t.prize_pool) || 0;
+
+    // Fixed prize breakdown: ₹5,000 / ₹3,000 / ₹2,000 placement + ₹5,000 shared special pool
+    var prizeWrap = document.getElementById('hub-prize-cards');
+    if (prizeWrap) {
+      prizeWrap.innerHTML =
+        '<div class="prize-card gold"><div class="prize-rank">1st Place</div><div class="prize-trophy">🥇</div><div class="prize-amount">₹5,000</div></div>' +
+        '<div class="prize-card silver"><div class="prize-rank">2nd Place</div><div class="prize-trophy">🥈</div><div class="prize-amount">₹3,000</div></div>' +
+        '<div class="prize-card bronze"><div class="prize-rank">3rd Place</div><div class="prize-trophy">🥉</div><div class="prize-amount">₹2,000</div></div>';
+      var specialPool = document.getElementById('hub-special-pool');
+      if (specialPool) specialPool.textContent = '₹5,000';
+    }
+
+    // Use admin endpoint for full list if admin; public approved-only endpoint otherwise
+    var teamsUrl = (me && me.isAdmin)
+      ? '/api/teams/' + currentTournamentId
+      : '/api/teams/' + currentTournamentId + '/approved';
+
+    fetch(teamsUrl)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        var teams = (d.teams || []).filter(function(t) { return t.status === 'approved' || !t.status; });
+        var wrap = document.getElementById('hub-teams-section');
+        if (!wrap) return;
+        if (!teams.length) { wrap.innerHTML = '<div style="text-align:center;color:var(--muted);padding:30px;">No approved teams yet.</div>'; return; }
+        wrap.innerHTML = '<h2 style="margin-bottom:16px;">Participating Teams (' + teams.length + ')</h2><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;">' +
+          teams.map(function(t) { return '<div class="card" style="display:flex;align-items:center;gap:12px;padding:12px;">' + (t.logo ? '<img src="' + t.logo + '" style="width:40px;height:40px;border-radius:8px;object-fit:cover;">' : '<div style="width:40px;height:40px;border-radius:8px;background:var(--glass2);display:flex;align-items:center;justify-content:center;">🛡️</div>') + '<div><div style="font-weight:700;font-size:.9rem;">' + (t.teamName || t.team_name) + '</div><div style="color:var(--muted);font-size:.75rem;">' + (t.players || []).length + ' players</div></div></div>'; }).join('') + '</div>';
+      });
+  }
+
+  function goHomeGlobal() {
+    currentTournamentId = null;
+    showPage('tournaments');
+    stopAuctionPoll();
+  }
+
+  var me = null;
+  var auctionState = null;
+  var auctionPollInterval = null;
+
+  // ── Toast ──────────────────────────────────────────────────────────────────
+  function toast(msg, type) {
+    var t = document.getElementById('toast');
+    t.textContent = msg; t.className = 'show ' + (type || 'info');
+    clearTimeout(t._tid); t._tid = setTimeout(function() { t.className = ''; }, 3200);
+  }
+
+  // ── Page navigation ────────────────────────────────────────────────────────
+  function showPage(name) {
+    // Guard admin pages from non-admins
+    if ((name === 'admin' || name === 'super-admin') && (!me || !me.isAdmin)) {
+      toast('Admin access required.', 'error');
+      return;
+    }
+    document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); p.style.display = 'none'; });
+    var pg = document.getElementById('page-' + name);
+    if (pg) { pg.classList.add('active'); pg.style.display = ''; }
+    document.querySelectorAll('[data-page]').forEach(function(el) {
+      el.classList.toggle('active', el.getAttribute('data-page') === name);
+    });
+    window.scrollTo(0, 0);
+    if (name === 'admin') {
+      var banner = document.getElementById('admin-tournament-banner');
+      if (banner) {
+        if (currentTournamentId) {
+          var t = allTournaments.find(function(x){return x.id===currentTournamentId;});
+          banner.textContent = '🎯 Managing: ' + (t ? t.title : 'Selected Tournament');
+          banner.style.display = 'block';
+        } else {
+          banner.textContent = '⚠️ No tournament selected — go Home and click Enter on a tournament first.';
+          banner.style.display = 'block';
+        }
+      }
+      switchAdminTab('tournaments');
+    }
+    if (name === 'super-admin') {
+      switchSuperAdminTab('users');
+    }
+    stopAuctionPoll();
+  }
+
+  document.querySelectorAll('[data-page]').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.preventDefault();
+      showPage(el.getAttribute('data-page'));
+    });
+  });
+
+  // ── Admin sub-tabs ─────────────────────────────────────────────────────────
+  function switchAdminTab(tab) {
+    // Only target tab-panels inside the admin layout, not satab panels
+    var adminMain = document.querySelector('#admin-layout-inner .admin-main');
+    var panels = adminMain ? adminMain.querySelectorAll('.tab-panel') : document.querySelectorAll('[id^="atab-"]');
+    panels.forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('[data-atab]').forEach(function(b) { b.classList.remove('active'); });
+    var panel = document.getElementById('atab-' + tab);
+    var btn   = document.querySelector('[data-atab="' + tab + '"]');
+    if (panel) panel.classList.add('active');
+    if (btn)   btn.classList.add('active');
+    if (tab === 'registrations') loadTeams();
+    if (tab === 'auction-config' || tab === 'auction-pool') loadAuctionState();
+    if (tab === 'tournaments') renderTournamentDetailCard();
+  }
+  document.querySelectorAll('[data-atab]').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchAdminTab(btn.getAttribute('data-atab')); });
+  });
+
+  // ── Super-admin tab switching ──────────────────────────────────────────────
+  function switchSuperAdminTab(tab) {
+    document.querySelectorAll('[id^="satab-"]').forEach(function(p) { p.classList.remove('active'); });
+    document.querySelectorAll('[data-satab]').forEach(function(b) { b.classList.remove('active'); });
+    var panel = document.getElementById('satab-' + tab);
+    var btn   = document.querySelector('[data-satab="' + tab + '"]');
+    if (panel) panel.classList.add('active');
+    if (btn)   btn.classList.add('active');
+    if (tab === 'users') loadUsers();
+    if (tab === 'tournaments-list') renderSuperAdminTournaments();
+  }
+  document.querySelectorAll('[data-satab]').forEach(function(btn) {
+    btn.addEventListener('click', function() { switchSuperAdminTab(btn.getAttribute('data-satab')); });
+  });
+
+  function renderSuperAdminTournaments() {
+    var tbody = document.getElementById('sa-tournaments-tbody');
+    if (!tbody) return;
+    if (!allTournaments.length) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--muted);padding:30px;">No tournaments yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = allTournaments.map(function(t) {
+      var date = new Date(t.date).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit' });
+      return '<tr><td><strong>' + t.title + '</strong></td><td>' + date + '</td>'
+        + '<td><span class="badge badge-approved">' + t.status + '</span></td>'
+        + '<td><button class="btn btn-danger btn-sm" onclick="deleteTournament(\'' + t.id + '\',\'' + t.title + '\')">Delete</button></td></tr>';
+    }).join('');
+  }
+
+  // ── Tournament detail card (in Moderation → Tournaments tab) ──────────────
+  function renderTournamentDetailCard() {
+    var card = document.getElementById('tournament-detail-card');
+    if (!card) return;
+    if (!currentTournamentId) {
+      card.innerHTML = '<p style="color:var(--muted);">No tournament selected. Go Home and enter a tournament first.</p>';
+      return;
+    }
+    var t = allTournaments.find(function(x) { return x.id === currentTournamentId; });
+    if (!t) { card.innerHTML = '<p style="color:var(--muted);">Tournament not found.</p>'; return; }
+    var date = t.date ? new Date(t.date).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}) : '—';
+    var endDate = t.end_date ? new Date(t.end_date).toLocaleDateString('en-IN', {day:'2-digit',month:'short',year:'numeric'}) : '—';
+    var gameMap = {mlbb:'Mobile Legends: Bang Bang', valorant:'Valorant', freefire:'Free Fire', bgmi:'BGMI'};
+    card.innerHTML =
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;">'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Title</div><div style="font-weight:700;font-size:1.1rem;">' + t.title + '</div></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Status</div><span class="badge badge-approved">' + (t.status||'upcoming').replace(/_/g,' ').toUpperCase() + '</span></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Start Date</div><div>' + date + '</div></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">End Date</div><div>' + endDate + '</div></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Game</div><div>' + (gameMap[t.game]||t.game||'MLBB') + '</div></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Max Teams</div><div>' + (t.max_teams||'—') + '</div></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Prize Pool</div><div>' + (t.prize_pool ? '₹'+Number(t.prize_pool).toLocaleString('en-IN') : '—') + '</div></div>'
+      + '<div><div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:4px;">Discord URL</div><div style="word-break:break-all;">' + (t.discord_url ? '<a href="'+t.discord_url+'" target="_blank" style="color:var(--cyan);">'+t.discord_url+'</a>' : '—') + '</div></div>'
+      + '</div>';
+  }
+
+  function openEditTournamentForm() {
+    var t = allTournaments.find(function(x) { return x.id === currentTournamentId; });
+    if (!t) return;
+    var f = document.getElementById('edit-tournament-form');
+    if (!f) return;
+    document.getElementById('edit-field-title').value = t.title || '';
+    document.getElementById('edit-field-status').value = t.status || 'upcoming';
+    document.getElementById('edit-field-date').value = t.date ? t.date.slice(0,16) : '';
+    document.getElementById('edit-field-end_date').value = t.end_date ? t.end_date.slice(0,16) : '';
+    document.getElementById('edit-field-game').value = t.game || 'mlbb';
+    document.getElementById('edit-field-prize_pool').value = t.prize_pool || '';
+    document.getElementById('edit-field-max_teams').value = t.max_teams || '';
+    document.getElementById('edit-field-discord_url').value = t.discord_url || '';
+    f.style.display = 'block';
+  }
+
+  function saveEditTournament(e) {
+    e.preventDefault();
+    if (!currentTournamentId) return;
+    var fields = {
+      title:       document.getElementById('edit-field-title').value,
+      status:      document.getElementById('edit-field-status').value,
+      date:        document.getElementById('edit-field-date').value,
+      end_date:    document.getElementById('edit-field-end_date').value || null,
+      game:        document.getElementById('edit-field-game').value,
+      prize_pool:  document.getElementById('edit-field-prize_pool').value ? Number(document.getElementById('edit-field-prize_pool').value) : null,
+      max_teams:   document.getElementById('edit-field-max_teams').value ? Number(document.getElementById('edit-field-max_teams').value) : null,
+      discord_url: document.getElementById('edit-field-discord_url').value || null
+    };
+    fetch('/api/tournaments/' + currentTournamentId, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(fields)
+    }).then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) {
+          toast('Tournament updated!', 'success');
+          document.getElementById('edit-tournament-form').style.display = 'none';
+          loadTournaments();
+          // Update the header title live
+          var heroTitle = document.getElementById('hero-title');
+          if (heroTitle) heroTitle.textContent = fields.title;
+        } else toast(d.error || 'Failed to save', 'error');
+      });
+  }
+
+  // ── Error banner ───────────────────────────────────────────────────────────
+  var errorMessages = {
+    not_member:'You must be a member of the ICEBERG server to register.',
+    not_logged_in:'You need to login first.',not_admin:'Admin access required.',
+    not_configured:'Discord OAuth not configured. Fill in .env.',
+    token_failed:'Discord token exchange failed.',auth_failed:'Authentication failed.',
+    invalid_state:'Security check failed. Please try again.'
+  };
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var err = params.get('error');
+    if (err) {
+      var banner = document.getElementById('error-banner');
+      document.getElementById('error-text').textContent = errorMessages[err] || ('Error: ' + err);
+      banner.style.display = 'block';
+      window.history.replaceState({}, '', '/');
+    }
+  })();
+
+  // ── Countdown ──────────────────────────────────────────────────────────────
+  function updateCountdown() {
+    var days = document.getElementById('cd-days');
+    if (!days) return; // countdown no longer on tournaments page
+    var diff = new Date('2026-09-15T18:00:00+05:30').getTime() - Date.now();
+    if (diff <= 0) { var c=document.getElementById('countdown'); if(c) c.innerHTML = '<div class="countdown-block" style="min-width:200px;"><div class="countdown-val" style="font-size:1.5rem;color:var(--pink);">🔴 LIVE NOW</div></div>'; return; }
+    var d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+    days.textContent=d;
+    document.getElementById('cd-hours').textContent=String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent=String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent=String(s).padStart(2,'0');
+  }
+  updateCountdown(); setInterval(updateCountdown, 1000);
+
+  // ── Init: fetch session ────────────────────────────────────────────────────
+  fetch('/api/me').then(function(r) { return r.json(); }).then(function(data) {
+    me = data;
+    renderNavbar(); renderHeroActions(); loadTournaments();
+  });
+
+  function renderNavbar() {
+    var right = document.getElementById('nav-right');
+    if (!me || !me.user) {
+      right.innerHTML = '<a href="/auth/discord" class="btn btn-discord btn-sm"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057.1 18.08.114 18.1.133 18.114a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg> Login</a>';
+    } else {
+      right.innerHTML = '<div class="user-pill"><img class="avatar" src="' + me.user.avatar + '" alt="avatar"><span>' + me.user.displayName + '</span></div><a href="/auth/logout" class="btn btn-secondary btn-sm">Logout</a>';
+      var saLi = document.getElementById('nav-superadmin-li');
+      if (saLi) saLi.style.display = me.isAdmin ? '' : 'none';
+    }
+  }
+
+  function renderHeroActions() {
+    // No-op: hero actions removed in new layout
+  }
+
+  // ── Apply auction role: show/hide bid controls based on admin status ────────
+  function applyAuctionRole(ownerRole) {
+    // ownerRole: null = spectator, 1 = owner1, 2 = owner2, 'admin' = full control
+    var isAdmin = me && me.isAdmin;
+    // Resolve role: prefer explicit ownerRole from auction state, fall back to auctionState cache
+    var role = ownerRole !== undefined ? ownerRole : (auctionState ? auctionState.ownerRole : null);
+
+    var o1bid  = document.getElementById('o1-bid-panel');
+    var o2bid  = document.getElementById('o2-bid-panel');
+    var o1spec = document.getElementById('o1-spectator-note');
+    var o2spec = document.getElementById('o2-spectator-note');
+    var ctrl   = document.getElementById('auction-admin-controls');
+
+    if (isAdmin) {
+      // Admin sees everything
+      if (o1bid)  o1bid.style.display  = '';
+      if (o2bid)  o2bid.style.display  = '';
+      if (o1spec) o1spec.style.display = 'none';
+      if (o2spec) o2spec.style.display = 'none';
+      if (ctrl)   ctrl.style.display   = '';
+    } else if (role === 1) {
+      // Owner 1: show their bid panel, hide owner 2 bid panel, hide SOLD/Skip
+      if (o1bid)  o1bid.style.display  = '';
+      if (o2bid)  o2bid.style.display  = 'none';
+      if (o1spec) o1spec.style.display = 'none';
+      if (o2spec) o2spec.style.display = '';
+      if (ctrl)   ctrl.style.display   = 'none';
+    } else if (role === 2) {
+      // Owner 2: show their bid panel, hide owner 1 bid panel, hide SOLD/Skip
+      if (o1bid)  o1bid.style.display  = 'none';
+      if (o2bid)  o2bid.style.display  = '';
+      if (o1spec) o1spec.style.display = '';
+      if (o2spec) o2spec.style.display = 'none';
+      if (ctrl)   ctrl.style.display   = 'none';
+    } else {
+      // Spectator: hide all bid panels, show spectator notes
+      if (o1bid)  o1bid.style.display  = 'none';
+      if (o2bid)  o2bid.style.display  = 'none';
+      if (o1spec) o1spec.style.display = '';
+      if (o2spec) o2spec.style.display = '';
+      if (ctrl)   ctrl.style.display   = 'none';
+    }
+  }
+
+  // ── Registration ───────────────────────────────────────────────────────────
+  function renderRegisterPage() {
+    if (!currentTournamentId) return; // not inside a tournament
+    var needsLogin = document.getElementById('reg-needs-login');
+    var notMember  = document.getElementById('reg-not-member');
+    var alreadyReg = document.getElementById('reg-already');
+    var formWrap   = document.getElementById('reg-form-wrap');
+    if (!needsLogin) return;
+    needsLogin.style.display = notMember.style.display = alreadyReg.style.display = formWrap.style.display = 'none';
+    if (!me || !me.user) { needsLogin.style.display = 'block'; return; }
+    if (!me.isMember)    { notMember.style.display  = 'block'; return; }
+    fetch('/api/my-team/' + currentTournamentId).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.team) {
+        alreadyReg.style.display = 'block';
+        document.getElementById('reg-team-name').textContent = data.team.teamName;
+        document.getElementById('reg-team-status-badge').innerHTML = '<span class="badge badge-' + data.team.status + '">' + data.team.status + '</span>';
+        document.getElementById('reg-team-players').textContent = (data.team.players || []).map(function(p) { return p.ign || p.name; }).filter(Boolean).join(' · ');
+      } else {
+        formWrap.style.display = 'block';
+        buildPlayerFields(); loadSpots();
+      }
+    });
+  }
+
+  function buildPlayerFields() {
+    var capWrap = document.getElementById('captain-wrap');
+    if (!capWrap || capWrap.children.length > 0) return;
+    capWrap.appendChild(makePlayerRow(0));
+    var pw = document.getElementById('players-wrap');
+    for (var i = 1; i < 5; i++) pw.appendChild(makePlayerRow(i));
+  }
+
+  function makePlayerRow(idx) {
+    var pre = idx === 0 ? '' : 'P' + (idx + 1) + ' ';
+    var div = document.createElement('div'); div.style.marginBottom = '14px';
+    div.innerHTML =
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px;">'
+      + '<input class="form-input player-ign" type="text" placeholder="' + pre + 'IGN"' + (idx===0?' required':'') + ' />'
+      + '<input class="form-input player-ingameid" type="text" placeholder="' + pre + 'Ingame ID" /></div>'
+      + '<div style="display:flex;gap:8px;align-items:center;">'
+      + '<input class="form-input player-discord" type="text" placeholder="' + pre + 'Discord Username" style="flex:1;" />'
+      + '<button type="button" class="btn btn-sm" style="background:rgba(69,243,255,.08);border:1px solid rgba(69,243,255,.3);color:var(--cyan);white-space:nowrap;" onclick="verifyDiscord(this)">Verify</button></div>';
+    return div;
+  }
+
+  function verifyDiscord(btn) {
+    var input = btn.previousElementSibling;
+    var username = input.value.trim();
+    if (!username) { toast('Enter a Discord username first', 'error'); return; }
+    btn.textContent = '...'; btn.disabled = true;
+    fetch('/api/verify-member?username=' + encodeURIComponent(username))
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.verified) {
+          btn.textContent = '✓'; btn.style.background = 'rgba(16,185,129,.15)'; btn.style.borderColor = 'rgba(16,185,129,.5)'; btn.style.color = '#10b981'; input.style.borderColor = '#10b981';
+        } else {
+          btn.textContent = '✗'; btn.style.background = 'rgba(255,0,124,.1)'; btn.style.borderColor = 'rgba(255,0,124,.4)'; btn.style.color = 'var(--pink)'; input.style.borderColor = 'var(--pink)';
+          toast(username + ' not found in ICEBERG', 'error'); btn.disabled = false;
+          setTimeout(function() { btn.textContent = 'Verify'; btn.style = ''; input.style = ''; }, 2500);
+        }
+      });
+  }
+
+  function loadSpots() {
+    fetch('/api/tournaments/' + currentTournamentId + '/spots').then(function(r) { return r.json(); }).then(function(d) {
+      document.getElementById('spots-count').textContent = d.filled + ' / ' + d.max;
+      document.getElementById('spots-progress').style.width = Math.min(100, (d.filled/d.max)*100) + '%';
+    });
+  }
+
+  document.getElementById('reg-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var teamName = document.getElementById('f-team-name').value.trim();
+    var logoFile = document.getElementById('f-logo').files[0];
+    var igns = document.querySelectorAll('.player-ign');
+    var ids  = document.querySelectorAll('.player-ingameid');
+    var discs = document.querySelectorAll('.player-discord');
+    var players = [];
+    igns.forEach(function(inp, i) { players.push({ ign: inp.value.trim(), ingameid: ids[i] ? ids[i].value.trim() : '', discord: discs[i] ? discs[i].value.trim() : '' }); });
+    var fd = new FormData();
+    fd.append('teamName', teamName); fd.append('players', JSON.stringify(players));
+    if (logoFile) fd.append('logo', logoFile);
+    var btn = document.getElementById('reg-submit-btn');
+    btn.disabled = true; btn.textContent = 'Submitting...';
+    fd.append('tournamentId', currentTournamentId);
+    fetch('/api/register', { method: 'POST', body: fd })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) { toast('Team registered! Awaiting admin approval.', 'success'); renderRegisterPage(); }
+        else { toast(data.error || 'Registration failed.', 'error'); btn.disabled = false; btn.textContent = 'Confirm Registration'; }
+      }).catch(function() { toast('Network error.', 'error'); btn.disabled = false; btn.textContent = 'Confirm Registration'; });
+  });
+
+  // ── Admin: Registrations ───────────────────────────────────────────────────
+  function loadTeams() { if(!currentTournamentId) return;
+    fetch('/api/teams/' + currentTournamentId).then(function(r) { return r.json(); }).then(function(data) { renderTeams(data.teams || []); });
+  }
+  function renderTeams(teams) {
+    var pending = teams.filter(function(t) { return t.status === 'pending'; }).length;
+    var approved = teams.filter(function(t) { return t.status === 'approved'; }).length;
+    var rejected = teams.filter(function(t) { return t.status === 'rejected'; }).length;
+    document.getElementById('reg-stats').innerHTML =
+      '<div class="stat-box"><div class="stat-val">' + teams.length + '</div><div class="stat-label">Total</div></div>' +
+      '<div class="stat-box"><div class="stat-val" style="color:var(--gold);">' + pending + '</div><div class="stat-label">Pending</div></div>' +
+      '<div class="stat-box"><div class="stat-val" style="color:#10b981;">' + approved + '</div><div class="stat-label">Approved</div></div>' +
+      '<div class="stat-box"><div class="stat-val" style="color:var(--pink);">' + rejected + '</div><div class="stat-label">Rejected</div></div>';
+    var tbody = document.getElementById('teams-tbody');
+    if (!teams.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:50px;">No registrations yet.</td></tr>'; return; }
+    tbody.innerHTML = teams.map(function(t) {
+      var players = (t.players || []).map(function(p) { return (p.ign || p.name) + (p.ingameid ? ' [' + p.ingameid + ']' : ''); }).join(', ');
+      var logo = t.logo ? '<img src="' + t.logo + '" style="width:32px;height:32px;border-radius:6px;object-fit:cover;vertical-align:middle;" />' : '🛡️';
+      var date = new Date(t.registeredAt).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+      var acts = '';
+      if (t.status === 'pending') { acts = '<button class="btn btn-success btn-sm" onclick="approveTeam(\'' + t.id + '\')">✓ Approve</button><button class="btn btn-danger btn-sm" onclick="rejectTeam(\'' + t.id + '\')">✗ Reject</button>'; }
+      else if (t.status === 'approved') { acts = '<button class="btn btn-danger btn-sm" onclick="rejectTeam(\'' + t.id + '\')">Revoke</button>'; }
+      else { acts = '<button class="btn btn-success btn-sm" onclick="approveTeam(\'' + t.id + '\')">Re-approve</button>'; }
+      acts += '<button class="btn btn-secondary btn-sm" onclick="deleteTeam(\'' + t.id + '\',\'' + t.teamName + '\')">🗑</button>';
+      return '<tr><td>' + logo + ' <strong>' + t.teamName + '</strong></td><td>' + (t.captainUsername || '—') + '</td><td style="max-width:220px;font-size:.8rem;color:var(--muted);">' + players + '</td><td style="white-space:nowrap;">' + date + '</td><td><span class="badge badge-' + t.status + '">' + t.status + '</span></td><td><div style="display:flex;gap:6px;flex-wrap:wrap;">' + acts + '</div></td></tr>';
+    }).join('');
+  }
+  function approveTeam(id) { fetch('/api/teams/' + id + '/approve', { method:'POST' }).then(function(r) { return r.json(); }).then(function(d) { if (d.success) { toast('Team approved!', 'success'); loadTeams(); } else toast(d.error, 'error'); }); }
+  function rejectTeam(id)  { fetch('/api/teams/' + id + '/reject',  { method:'POST' }).then(function(r) { return r.json(); }).then(function(d) { if (d.success) { toast('Team rejected.', 'info');   loadTeams(); } else toast(d.error, 'error'); }); }
+  function deleteTeam(id, name) {
+    if (!confirm('Delete team "' + name + '"?')) return;
+    fetch('/api/teams/' + id, { method:'DELETE' }).then(function(r) { return r.json(); }).then(function(d) { if (d.success) { toast('Deleted.', 'info'); loadTeams(); } else toast(d.error, 'error'); });
+  }
+
+  // ── Admin: Users ───────────────────────────────────────────────────────────
+  
+  function renderAdminTournaments() {
+    // Update both the super-admin list and trigger detail card refresh
+    renderSuperAdminTournaments();
+    renderTournamentDetailCard();
+  }
+
+  function createTournament(e) {
+    e.preventDefault();
+    // Read all data-field fields from the submitted form
+    var formEl = e.target;
+    var fields = {};
+    formEl.querySelectorAll('[data-field]').forEach(function(el) { if(el.value) fields[el.getAttribute('data-field')] = el.value; });
+    if (!fields.title || !fields.date) { toast('Tournament name and start date are required', 'error'); return; }
+    fetch('/api/tournaments', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(fields) })
+      .then(r=>r.json()).then(d => {
+        if(d.success) {
+          toast('Tournament created!', 'success');
+          formEl.reset();
+          formEl.style.display='none';
+          var qf = document.getElementById('quick-create-form'); if(qf) qf.style.display='none';
+          loadTournaments();
+        } else toast(d.error || 'Failed to create tournament', 'error');
+      }).catch(function() { toast('Network error. Is the server running?', 'error'); });
+  }
+
+  function deleteTournament(id, title) {
+    if(!confirm('Delete tournament "' + title + '"? This deletes ALL registrations and auction data.')) return;
+    fetch('/api/tournaments/' + id, { method:'DELETE' })
+      .then(r=>r.json()).then(d => {
+        if(d.success) { toast('Deleted', 'info'); loadTournaments(); if(currentTournamentId === id) goHomeGlobal(); }
+        else toast(d.error, 'error');
+      });
+  }
+
+  function loadUsers() {
+    fetch('/api/users').then(function(r) { return r.json(); }).then(function(data) { renderUsers(data.users || []); });
+  }
+  function renderUsers(users) {
+    var tbody = document.getElementById('users-tbody');
+    if (!users.length) { tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:50px;">No users have logged in yet.</td></tr>'; return; }
+    tbody.innerHTML = users.map(function(u) {
+      var avatar = u.avatar ? '<img src="' + u.avatar + '" class="user-row-avatar" /> ' : '👤 ';
+      var lastSeen = u.lastSeen ? new Date(u.lastSeen).toLocaleDateString('en-IN', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' }) : '—';
+      var memberBadge = u.isMember ? '<span class="badge badge-approved">✓ Member</span>' : '<span class="badge badge-rejected">✗ Not Member</span>';
+      var roleBadge = u.isAdmin ? '<span class="badge" style="background:rgba(251,191,36,.15);color:var(--gold);border:1px solid rgba(251,191,36,.3);">Admin</span>' : '<span class="badge badge-pending">Member</span>';
+      var actionBtn = u.isAdmin
+        ? '<button class="btn btn-danger btn-sm" onclick="demoteUser(\'' + u.id + '\')">Remove Admin</button>'
+        : '<button class="btn btn-gold btn-sm" onclick="promoteUser(\'' + u.id + '\')">Make Admin</button>';
+      return '<tr><td>' + avatar + '<strong>' + (u.displayName || u.username) + '</strong><br><span style="color:var(--muted);font-size:.75rem;">@' + u.username + '</span></td><td style="font-family:monospace;font-size:.8rem;">' + u.id + '</td><td>' + memberBadge + '</td><td style="font-size:.8rem;">' + lastSeen + '</td><td>' + roleBadge + '</td><td>' + actionBtn + '</td></tr>';
+    }).join('');
+  }
+  function seedDummies() {
+    if (!currentTournamentId) { toast('Enter a tournament first (Home → Enter)', 'error'); return; }
+    var count = document.getElementById('dummy-count').value;
+    fetch('/api/tournaments/' + currentTournamentId + '/seed-dummies', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({ count: Number(count) })
+    }).then(function(r){return r.json();}).then(function(d) {
+      if (d.success) { toast('Added ' + d.inserted + ' dummy teams! ✓', 'success'); loadTeams(); }
+      else toast(d.error || 'Failed', 'error');
+    });
+  }
+
+  function clearDummies() {
+    if (!currentTournamentId) { toast('Enter a tournament first', 'error'); return; }
+    if (!confirm('Remove all dummy teams from this tournament?')) return;
+    fetch('/api/tournaments/' + currentTournamentId + '/clear-dummies', { method: 'DELETE' })
+      .then(function(r){return r.json();}).then(function(d) {
+        if (d.success) { toast('Dummy teams cleared.', 'info'); loadTeams(); }
+        else toast(d.error || 'Failed', 'error');
+      });
+  }
+
+  function promoteUser(id) {
+    fetch('/api/users/' + id + '/promote', { method:'POST' }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.success) { toast('User promoted to Admin!', 'success'); loadUsers(); } else toast(d.error, 'error');
+    });
+  }
+  function demoteUser(id) {
+    fetch('/api/users/' + id + '/demote', { method:'POST' }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.success) { toast('Admin role removed.', 'info'); loadUsers(); } else toast(d.error, 'error');
+    });
+  }
+
+  // ── Admin: Auction config ──────────────────────────────────────────────────
+  function loadAuctionState() { if(!currentTournamentId) return;
+    fetch('/api/auction/state/' + currentTournamentId).then(function(r) { return r.json(); }).then(function(a) {
+      document.getElementById('cfg-o1-name').value    = a.owner1.name;
+      document.getElementById('cfg-o2-name').value    = a.owner2.name;
+      document.getElementById('cfg-o1-discord').value = a.owner1.discord || '';
+      document.getElementById('cfg-o2-discord').value = a.owner2.discord || '';
+      var curTeam = a.teams[a.currentIndex] ? a.teams[a.currentIndex].name : (a.concluded ? 'Concluded' : 'No teams yet');
+      document.getElementById('auction-state-info').innerHTML =
+        '<div class="stats-row" style="margin-bottom:12px;">' +
+        '<div class="stat-box"><div class="stat-val">' + a.teams.length + '</div><div class="stat-label">In Pool</div></div>' +
+        '<div class="stat-box"><div class="stat-val">' + a.currentIndex + '</div><div class="stat-label">Sold</div></div>' +
+        '<div class="stat-box"><div class="stat-val" style="color:var(--cyan);">' + (a.teams.length - a.currentIndex) + '</div><div class="stat-label">Remaining</div></div>' +
+        '</div><p>On block: <strong>' + curTeam + '</strong></p>' +
+        '<p>' + a.owner1.name + ': <strong style="color:var(--cyan);">' + Number(a.owner1.points).toLocaleString('en-IN') + ' pts</strong></p>' +
+        '<p>' + a.owner2.name + ': <strong style="color:var(--cyan);">' + Number(a.owner2.points).toLocaleString('en-IN') + ' pts</strong></p>';
+      // Pool tab
+      var poolWrap = document.getElementById('pool-wrap');
+      if (!a.teams.length) { poolWrap.innerHTML = '<div style="color:var(--muted);text-align:center;padding:40px;">No approved teams yet.</div>'; return; }
+      poolWrap.innerHTML = a.teams.map(function(t, i) {
+        var isSold = i < a.currentIndex, isCur = i === a.currentIndex;
+        return '<div class="pool-item" style="' + (isSold ? 'opacity:.4;' : '') + (isCur ? 'border-color:var(--cyan);' : '') + '">' +
+          '<span class="pool-order">' + (i+1) + '</span>' +
+          (t.logo ? '<img src="' + t.logo + '" style="width:32px;height:32px;border-radius:6px;object-fit:cover;" />' : '🛡️') +
+          '<span class="pool-name">' + t.name + '</span>' +
+          (isSold ? '<span class="badge badge-approved">Sold</span>' : '') +
+          (isCur ? '<span class="badge" style="background:rgba(69,243,255,.12);color:var(--cyan);border:1px solid rgba(69,243,255,.3);">On Block</span>' : '') +
+        '</div>';
+      }).join('');
+    });
+  }
+  function saveConfig() {
+    var o1name = document.getElementById('cfg-o1-name').value.trim();
+    var o2name = document.getElementById('cfg-o2-name').value.trim();
+    if (!o1name || !o2name) { toast('Owner names cannot be empty', 'error'); return; }
+    fetch('/api/auction/config', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({
+      tournamentId:   currentTournamentId,
+      owner1Name:     o1name,
+      owner2Name:     o2name,
+      owner1Discord:  document.getElementById('cfg-o1-discord').value,
+      owner2Discord:  document.getElementById('cfg-o2-discord').value
+    }) })
+      .then(function(r) { return r.json(); }).then(function(d) {
+        if (d.success) { toast('Config saved!', 'success'); applyAuctionRole(); }
+        else toast(d.error, 'error');
+      });
+  }
+  function resetAuction() {
+    if (!confirm('Reset entire auction? All bids, rosters and bracket will be cleared.')) return;
+    fetch('/api/auction/reset', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({tournamentId: currentTournamentId, owner1Name: document.getElementById('cfg-o1-name').value, owner2Name: document.getElementById('cfg-o2-name').value, startingPoints: document.getElementById('cfg-points').value }) })
+      .then(function(r) { return r.json(); }).then(function(d) {
+        if (d.success) {
+          toast('Auction reset!', 'info');
+          loadAuctionState();
+          // Clear the live auction display if it's open
+          if (auctionState) { auctionState = d.auction; renderAuction(d.auction); }
+          // Clear bracket display
+          currentBracket = null;
+          renderBracket(null);
+        } else toast(d.error, 'error');
+      });
+  }
+
+  // ── Auction live ───────────────────────────────────────────────────────────
+  function fmt(n) { return Number(n).toLocaleString('en-IN'); }
+
+  function loadState() { if(!currentTournamentId) return;
+    fetch('/api/auction/state/' + currentTournamentId).then(function(r) { return r.json(); }).then(function(a) {
+      auctionState = a;
+      renderAuction(a);
+      applyAuctionRole(a.ownerRole);
+      // Sync timer from server timestamp on every poll
+      if (a.bidAt && !a.concluded) {
+        startTimerFromServer(a.bidAt);
+      } else {
+        stopTimer();
+      }
+    }).catch(function() { toast('Failed to load auction state', 'error'); });
+  }
+  function startAuctionPoll() { if(!currentTournamentId) return; if (!auctionPollInterval) auctionPollInterval = setInterval(loadState, 4000); }
+  function stopAuctionPoll()  { clearInterval(auctionPollInterval); auctionPollInterval = null; }
+
+  function renderAuction(a) {
+    // Always update owner panels (names, points, rosters)
+    document.getElementById('o1-name').textContent = a.owner1 ? a.owner1.name : 'Owner 1';
+    document.getElementById('o2-name').textContent = a.owner2 ? a.owner2.name : 'Owner 2';
+    document.getElementById('o1-pts').textContent  = fmt(a.owner1 ? a.owner1.points : 0);
+    document.getElementById('o2-pts').textContent  = fmt(a.owner2 ? a.owner2.points : 0);
+    renderRoster('o1-roster', a.owner1 ? a.owner1.roster : []);
+    renderRoster('o2-roster', a.owner2 ? a.owner2.roster : []);
+
+    // Center stage
+    var stage = document.getElementById('center-stage');
+    if (!stage) return;
+    if (a.concluded) {
+      // Stop polling — nothing left to update
+      stopAuctionPoll();
+      stage.innerHTML =
+        '<div style="text-align:center;padding:40px;">' +
+        '<div style="font-size:4rem;margin-bottom:16px;">🎉</div>' +
+        '<h2 style="font-size:2rem;font-weight:900;color:var(--cyan);letter-spacing:3px;">Auction Concluded!</h2>' +
+        '<p style="color:var(--muted);margin-top:12px;">All teams have been drafted.</p>' +
+        '<button class="btn btn-secondary btn-sm" style="margin-top:20px;" onclick="switchInnerTabById(\'bracket\')">⚔️ View Bracket</button>' +
+        '</div>';
+      return;
+    }
+
+    var bidAmountEl = document.getElementById('bid-amount');
+    var soldBtn     = document.getElementById('sold-btn');
+    var logo        = document.getElementById('team-logo');
+    var nameEl      = document.getElementById('team-name');
+    var tagEl       = document.getElementById('stage-tag');
+    var bidByEl     = document.getElementById('bid-by');
+
+    // Guard: if stage was replaced (e.g. after concluded then reset), rebuild it
+    if (!bidAmountEl || !soldBtn) {
+      stage.innerHTML =
+        '<div class="on-block-tag" id="stage-tag">Waiting to begin...</div>' +
+        '<div class="team-logo-big" id="team-logo">🛡️</div>' +
+        '<div class="team-name-stage" id="team-name">—</div>' +
+        '<div class="bid-label-stage">Current Highest Bid</div>' +
+        '<div class="bid-amount-stage" id="bid-amount">0</div>' +
+        '<div class="bid-by-stage" id="bid-by">&nbsp;</div>' +
+        '<div class="timer-wrap hidden" id="timer-wrap">' +
+          '<svg class="timer-svg" viewBox="0 0 120 120"><circle class="timer-track" cx="60" cy="60" r="54"/><circle class="timer-ring" id="timer-ring" cx="60" cy="60" r="54"/></svg>' +
+          '<div class="timer-num"><span class="timer-val" id="timer-val">60</span><span class="timer-label-sm">seconds</span></div>' +
+        '</div>' +
+        '<div id="auction-admin-controls">' +
+          '<button class="sold-btn" id="sold-btn" onclick="sold()" disabled>SOLD!</button>' +
+          '<button class="skip-btn" id="skip-btn" onclick="skipTeam()">Skip Team →</button>' +
+        '</div>';
+      // Re-apply role visibility
+      applyAuctionRole();
+      bidAmountEl = document.getElementById('bid-amount');
+      soldBtn     = document.getElementById('sold-btn');
+      logo        = document.getElementById('team-logo');
+      nameEl      = document.getElementById('team-name');
+      tagEl       = document.getElementById('stage-tag');
+      bidByEl     = document.getElementById('bid-by');
+    }
+
+    if (bidAmountEl) bidAmountEl.textContent = fmt(a.currentBid);
+
+    var cur = a.teams[a.currentIndex];
+    if (cur) {
+      if (nameEl) nameEl.textContent = cur.name;
+      if (tagEl)  tagEl.textContent  = 'On Block — Team ' + (a.currentIndex + 1) + ' of ' + a.teams.length;
+      if (logo)   logo.innerHTML = cur.logo ? '<img src="' + cur.logo + '" style="width:100%;height:100%;object-fit:cover;border-radius:16px;" />' : '🛡️';
+    } else {
+      if (nameEl) nameEl.textContent = 'No teams';
+      if (tagEl)  tagEl.textContent  = 'No approved teams in pool';
+      if (logo)   logo.textContent   = '🛡️';
+    }
+    if (a.currentBidderId) {
+      if (bidByEl) bidByEl.textContent = '↑ Highest bid by ' + a['owner' + a.currentBidderId].name;
+      if (logo)    logo.classList.add('bidding');
+      if (soldBtn) soldBtn.disabled = false;
+    } else {
+      if (bidByEl) bidByEl.innerHTML = '&nbsp;';
+      if (logo)    logo.classList.remove('bidding');
+      if (soldBtn) soldBtn.disabled = true;
+    }
+  }
+
+  function renderRoster(id, roster) {
+    var el = document.getElementById(id);
+    if (!roster || !roster.length) { el.innerHTML = '<div style="color:var(--muted);font-size:.8rem;text-align:center;padding:16px 0;">No teams yet</div>'; return; }
+    el.innerHTML = roster.map(function(t) { return '<div class="roster-item"><span class="ri-name">' + t.name + '</span><span class="ri-pts">' + fmt(t.soldFor) + ' pts</span></div>'; }).join('');
+  }
+  // ── Bid Timer ──────────────────────────────────────────────────────────────
+  var TIMER_DURATION = 60;
+  var timerInterval  = null;
+  var CIRCUMFERENCE  = 2 * Math.PI * 54; // 339.3
+
+  // Start timer synced to server bid_at timestamp
+  function startTimerFromServer(bidAt) {
+    stopTimer();
+    if (!bidAt) return;
+
+    var bidTime = new Date(bidAt).getTime();
+
+    function tick() {
+      var elapsed   = (Date.now() - bidTime) / 1000;
+      var remaining = Math.max(0, TIMER_DURATION - elapsed);
+
+      var wrap = document.getElementById('timer-wrap');
+      var ring = document.getElementById('timer-ring');
+      var val  = document.getElementById('timer-val');
+      if (!wrap || !ring || !val) { stopTimer(); return; }
+
+      wrap.classList.remove('hidden');
+      updateTimerDisplay(remaining, ring, val);
+
+      if (remaining <= 10) { ring.classList.add('danger'); val.classList.add('danger'); }
+      else                  { ring.classList.remove('danger'); val.classList.remove('danger'); }
+
+      if (remaining <= 0) {
+        stopTimer();
+        // Only the admin triggers auto-sell to avoid duplicate calls
+        if (me && me.isAdmin) {
+          toast('Time\'s up! Auto-selling...', 'info');
+          sold();
+        }
+      }
+    }
+
+    tick(); // immediate first render so there's no 1-second delay
+    timerInterval = setInterval(tick, 500); // 500ms for smooth display
+  }
+
+  function stopTimer() {
+    clearInterval(timerInterval); timerInterval = null;
+    var wrap = document.getElementById('timer-wrap');
+    if (wrap) wrap.classList.add('hidden');
+  }
+
+  function updateTimerDisplay(t, ring, val) {
+    var pct = Math.max(0, t) / TIMER_DURATION;
+    ring.style.strokeDashoffset = CIRCUMFERENCE * (1 - pct);
+    val.textContent = Math.max(0, Math.ceil(t));
+  }
+
+  function bid(owner, amount) {
+    fetch('/api/auction/bid', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({tournamentId: currentTournamentId, owner: owner, amount: amount }) })
+      .then(function(r) { return r.json(); }).then(function(d) {
+        if (d.success) {
+          auctionState = d.auction; renderAuction(d.auction);
+          applyAuctionRole(d.auction.ownerRole);
+          var el = document.getElementById('bid-amount');
+          if (el) { el.style.transform = 'scale(1.2)'; el.style.color = 'var(--cyan)'; setTimeout(function() { el.style.transform = ''; el.style.color = ''; }, 400); }
+          startTimerFromServer(d.auction.bidAt); // synced to server timestamp
+        } else toast(d.error, 'error');
+      });
+  }
+
+  function bidCustom(owner) {
+    var input = document.getElementById('o' + owner + '-custom-amt');
+    var amount = parseInt(input.value, 10);
+    if (!amount || amount < 1) { toast('Enter a valid amount', 'error'); input.focus(); return; }
+    input.value = '';
+    bid(owner, amount);
+  }
+  function sold() {
+    stopTimer();
+    fetch('/api/auction/sold', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({tournamentId: currentTournamentId}) }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.success) {
+        var prev = auctionState.teams[auctionState.currentIndex];
+        toast(prev.name + ' sold to ' + auctionState['owner' + auctionState.currentBidderId].name + '!', 'success');
+        auctionState = d.auction; renderAuction(d.auction);
+      } else toast(d.error, 'error');
+    });
+  }
+  function skipTeam() {
+    if (!confirm('Skip this team?')) return;
+    stopTimer();
+    fetch('/api/auction/skip', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({tournamentId: currentTournamentId}) }).then(function(r) { return r.json(); }).then(function(d) {
+      if (d.success) { toast('Team skipped.', 'info'); auctionState = d.auction; renderAuction(d.auction); } else toast(d.error, 'error');
+    });
+  }
+
+  // ── Bracket ────────────────────────────────────────────────────────────────
+
+  var currentBracket = null;
+
+  function loadBracket() {
+    if (!currentTournamentId) return;
+    // Show generate button for admins
+    var ctrl = document.getElementById('bracket-admin-controls');
+    if (ctrl) ctrl.style.display = (me && me.isAdmin) ? 'flex' : 'none';
+
+    fetch('/api/bracket/' + currentTournamentId)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        currentBracket = d.bracket;
+        renderBracket(d.bracket);
+      });
+  }
+
+  function generateBracket(regen) {
+    if (!currentTournamentId) return;
+    if (regen && !confirm('Regenerate the bracket? Current results will be lost.')) return;
+    fetch('/api/bracket/generate/' + currentTournamentId, { method: 'POST' })
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) { toast('Bracket generated!', 'success'); currentBracket = d.bracket; renderBracket(d.bracket); }
+        else toast(d.error, 'error');
+      });
+  }
+
+  function recordResult(roundIndex, matchIndex, winnerId) {
+    fetch('/api/bracket/result/' + currentTournamentId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roundIndex: roundIndex, matchIndex: matchIndex, winnerId: winnerId })
+    }).then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) { currentBracket = d.bracket; renderBracket(d.bracket); toast('Result saved!', 'success'); }
+        else toast(d.error, 'error');
+      });
+  }
+
+  // ── Bracket result edit modal ──────────────────────────────────────────────
+  var _brmState = null; // { roundIndex, matchIndex, match }
+
+  function openBracketResultModal(roundIndex, matchIndex) {
+    var bracket = currentBracket;
+    if (!bracket) return;
+    var match = bracket.rounds[roundIndex] && bracket.rounds[roundIndex].matches[matchIndex];
+    if (!match) return;
+    _brmState = { roundIndex: roundIndex, matchIndex: matchIndex, match: match };
+
+    var teamsEl = document.getElementById('brm-teams');
+    teamsEl.innerHTML = '';
+
+    [match.team1, match.team2].forEach(function(team) {
+      if (!team || !team.id) return;
+      var isWinner = match.winner && match.winner.id === team.id;
+      var ownerColor = team.owner === 1 ? 'var(--cyan)' : 'var(--pink)';
+      var btn = document.createElement('button');
+      btn.className = 'btn btn-full';
+      btn.style.cssText = 'display:flex;align-items:center;gap:10px;justify-content:flex-start;padding:12px 16px;'
+        + (isWinner
+          ? 'background:rgba(69,243,255,.1);border:1px solid var(--cyan);color:var(--cyan);'
+          : 'background:var(--glass2);border:1px solid var(--border);color:var(--text);');
+      btn.innerHTML = '<span style="width:10px;height:10px;border-radius:50%;background:' + ownerColor + ';flex-shrink:0;display:inline-block;"></span>'
+        + (team.logo ? '<img src="' + escHtml(team.logo) + '" style="width:24px;height:24px;border-radius:4px;object-fit:cover;" />' : '<span style="font-size:1rem;">🛡️</span>')
+        + '<span style="font-weight:700;">' + escHtml(team.name) + '</span>'
+        + (isWinner ? '<span style="margin-left:auto;font-size:.75rem;">👑 Current Winner</span>' : '');
+      btn.onclick = (function(tid) {
+        return function() {
+          closeBracketResultModal();
+          recordResult(_brmState.roundIndex, _brmState.matchIndex, tid);
+        };
+      })(team.id);
+      teamsEl.appendChild(btn);
+    });
+
+    var modal = document.getElementById('bracket-result-modal');
+    modal.style.display = 'flex';
+  }
+
+  function closeBracketResultModal() {
+    document.getElementById('bracket-result-modal').style.display = 'none';
+    _brmState = null;
+  }
+
+  function clearBracketResult() {
+    if (!_brmState || !currentTournamentId) return;
+    var ri = _brmState.roundIndex, mi = _brmState.matchIndex;
+    closeBracketResultModal();
+    fetch('/api/bracket/clear-result/' + currentTournamentId, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ roundIndex: ri, matchIndex: mi })
+    }).then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d.success) { currentBracket = d.bracket; renderBracket(d.bracket); toast('Result cleared.', 'info'); }
+        else toast(d.error, 'error');
+      });
+  }
+
+  // Close modal on backdrop click or Escape
+  document.getElementById('bracket-result-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeBracketResultModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeBracketResultModal();
+  });
+
+  function renderBracket(bracket) {
+    var wrap = document.getElementById('bracket-section');
+    if (!wrap) return;
+
+    if (!bracket || !bracket.rounds || !bracket.rounds.length) {
+      wrap.innerHTML = '<div class="card" style="text-align:center;padding:40px;"><div style="font-size:2.5rem;margin-bottom:12px;">📅</div><p style="color:var(--muted);">The bracket will be revealed after the live auction concludes.</p></div>';
+      return;
+    }
+
+    var isAdmin      = me && me.isAdmin;
+    var totalRounds  = bracket.rounds.length;
+
+    // For each round, count visible (non-bye) matches so we can size cells correctly.
+    // All rounds share the same total height. Each round's cells = 2^(totalRounds-1-rIdx) slots.
+    // We use CSS flex so every cell gets equal height automatically.
+
+    var html = '<div class="bracket-wrap"><div class="bracket-rounds">';
+
+    bracket.rounds.forEach(function(round, rIdx) {
+      var isFinal = rIdx === totalRounds - 1;
+      html += '<div class="bracket-round' + (isFinal ? ' bracket-final' : '') + '">';
+      html += '<div class="bracket-round-label">' + escHtml(round.label) + '</div>';
+      html += '<div class="bracket-round-body">';
+
+      round.matches.forEach(function(match, mIdx) {
+        if (match.bye) {
+          // Invisible placeholder — keeps the grid aligned without showing ugly BYE text
+          html += '<div class="bracket-cell"><div class="bracket-match bracket-bye">'
+               +  '<div class="bracket-team tbd"><span class="bracket-team-name">BYE</span></div>'
+               +  '<div class="bracket-team tbd"><span class="bracket-team-name">BYE</span></div>'
+               +  '</div></div>';
+          return;
+        }
+        html += '<div class="bracket-cell">';
+        html += '<div class="bracket-match">';
+        html += renderTeamRow(match.team1, match, rIdx, mIdx, isAdmin, 1);
+        html += renderTeamRow(match.team2, match, rIdx, mIdx, isAdmin, 2);
+        // Admin edit button shown when match has a result
+        if (isAdmin && match.winner && match.team1 && match.team1.id && match.team2 && match.team2.id) {
+          html += '<div style="text-align:center;border-top:1px solid var(--border);padding:4px 6px;">'
+               +  '<button onclick="openBracketResultModal(' + rIdx + ',' + mIdx + ')" '
+               +  'style="background:transparent;border:none;color:var(--muted);font-size:.65rem;cursor:pointer;font-family:\'Outfit\',sans-serif;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;border-radius:4px;transition:color .2s;" '
+               +  'onmouseover="this.style.color=\'var(--cyan)\'" onmouseout="this.style.color=\'var(--muted)\'">'
+               +  '✎ Edit Result</button>'
+               +  '</div>';
+        }
+        html += '</div>';
+        html += '</div>';
+      });
+
+      html += '</div></div>'; // .bracket-round-body .bracket-round
+    });
+
+    html += '</div></div>'; // .bracket-rounds .bracket-wrap
+
+    // Legend
+    html += '<div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:16px;padding:0 2px;">'
+          + '<div style="display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);">'
+          + '<span style="width:8px;height:8px;border-radius:50%;background:var(--cyan);display:inline-block;"></span>Owner 1</div>'
+          + '<div style="display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--muted);">'
+          + '<span style="width:8px;height:8px;border-radius:50%;background:var(--pink);display:inline-block;"></span>Owner 2</div>'
+          + (isAdmin ? '<div style="font-size:.75rem;color:var(--muted);">👆 Click a team to record match result</div>' : '')
+          + '</div>';
+
+    wrap.innerHTML = html;
+  }
+
+  function escHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderTeamRow(team, match, rIdx, mIdx, isAdmin, slot) {
+    // No team yet (TBD from a future round)
+    if (!team) {
+      return '<div class="bracket-team tbd">'
+           + '<span class="bracket-team-logo">?</span>'
+           + '<span class="bracket-team-name">TBD</span>'
+           + '</div>';
+    }
+
+    var isWinner = match.winner && match.winner.id === team.id;
+    var isLoser  = match.winner && match.winner.id !== team.id;
+    // Admin can pick if no winner yet and both teams are real teams (not TBD)
+    var canPick  = isAdmin && !match.winner
+                   && match.team1 && match.team1.id
+                   && match.team2 && match.team2.id;
+
+    var ownerColor = team.owner === 1 ? 'var(--cyan)' : 'var(--pink)';
+
+    var cls = 'bracket-team';
+    if (isWinner) cls += ' winner';
+    if (isLoser)  cls += ' loser';
+    if (canPick)  cls += ' pick' + (team.owner === 2 ? ' o2' : '');
+
+    var onclick = canPick
+      ? ' onclick="recordResult(' + rIdx + ',' + mIdx + ',\'' + team.id + '\')"'
+      : '';
+
+    var logo = team.logo
+      ? '<img src="' + escHtml(team.logo) + '" class="bracket-team-logo" alt="" />'
+      : '<span class="bracket-team-logo">🛡️</span>';
+
+    var crown = isWinner ? '<span style="color:var(--gold);margin-left:3px;font-size:.75rem;">👑</span>' : '';
+
+    return '<div class="' + cls + '"' + onclick
+         + ' title="' + escHtml((team.ownerName || '') + "'s team") + '">'
+         + logo
+         + '<span class="bracket-owner-dot" style="background:' + ownerColor + '"></span>'
+         + '<span class="bracket-team-name">' + escHtml(team.name) + crown + '</span>'
+         + '</div>';
+  }
+
+</script>
+
+<!-- ── Team Detail Modal ── -->
+<div id="team-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0d1117;border:1px solid rgba(69,243,255,.2);border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 0 60px rgba(69,243,255,.08);">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:20px 24px 16px;border-bottom:1px solid var(--border);position:sticky;top:0;background:#0d1117;z-index:1;">
+      <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--cyan);">Registration Details</span>
+      <button onclick="closeTeamModal()" style="background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;padding:0;">&#x2715;</button>
+    </div>
+    <div id="team-modal-body" style="padding:24px;"></div>
+  </div>
+</div>
+
+<!-- ── Bracket Result Edit Modal ── -->
+<div id="bracket-result-modal" style="display:none;position:fixed;inset:0;z-index:10000;background:rgba(0,0,0,.8);backdrop-filter:blur(10px);align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#0d1117;border:1px solid rgba(69,243,255,.2);border-radius:16px;max-width:400px;width:100%;box-shadow:0 0 60px rgba(69,243,255,.1);">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 22px 14px;border-bottom:1px solid var(--border);">
+      <span style="font-size:.7rem;text-transform:uppercase;letter-spacing:3px;color:var(--cyan);">Edit Match Result</span>
+      <button onclick="closeBracketResultModal()" style="background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1;padding:0;">&#x2715;</button>
+    </div>
+    <div style="padding:20px 22px;">
+      <p style="color:var(--muted);font-size:.82rem;margin-bottom:16px;">Choose the winner or clear this result.</p>
+      <div id="brm-teams" style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;"></div>
+      <button onclick="clearBracketResult()" class="btn btn-danger btn-full" style="margin-top:4px;">✕ Clear Result</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Store teams for modal lookup
+  var allTeams = [];
+
+  // Patch renderTeams to store teams and use new layout
+  var _origRenderTeams = renderTeams;
+  function renderTeams(teams) {
+    allTeams = teams;
+    var pending  = teams.filter(function(t){ return t.status==='pending';  }).length;
+    var approved = teams.filter(function(t){ return t.status==='approved'; }).length;
+    var rejected = teams.filter(function(t){ return t.status==='rejected'; }).length;
+    document.getElementById('reg-stats').innerHTML =
+      '<div class="stat-box"><div class="stat-val">'+teams.length+'</div><div class="stat-label">Total</div></div>'+
+      '<div class="stat-box"><div class="stat-val" style="color:var(--gold);">'+pending+'</div><div class="stat-label">Pending</div></div>'+
+      '<div class="stat-box"><div class="stat-val" style="color:#10b981;">'+approved+'</div><div class="stat-label">Approved</div></div>'+
+      '<div class="stat-box"><div class="stat-val" style="color:var(--pink);">'+rejected+'</div><div class="stat-label">Rejected</div></div>';
+    var tbody = document.getElementById('teams-tbody');
+    if (!teams.length) { tbody.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:50px;">No registrations yet.</td></tr>'; return; }
+    tbody.innerHTML = teams.map(function(t) {
+      var logo = t.logo ? '<img src="'+t.logo+'" style="width:32px;height:32px;border-radius:6px;object-fit:cover;vertical-align:middle;margin-right:8px;" />' : '<span style="margin-right:8px;">&#x1F6E1;&#xFE0F;</span>';
+      var date = new Date(t.registeredAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+      var acts = '<button class="btn btn-secondary btn-sm" onclick="openTeamModal(\''+t.id+'\')" style="border-color:rgba(69,243,255,.3);color:var(--cyan);">&#x1F441; View</button>';
+      if (t.status==='pending') { acts+='<button class="btn btn-success btn-sm" onclick="approveTeam(\''+t.id+'\')">&#x2713; Approve</button><button class="btn btn-danger btn-sm" onclick="rejectTeam(\''+t.id+'\')">&#x2717; Reject</button>'; }
+      else if (t.status==='approved') { acts+='<button class="btn btn-danger btn-sm" onclick="rejectTeam(\''+t.id+'\')">Revoke</button>'; }
+      else { acts+='<button class="btn btn-success btn-sm" onclick="approveTeam(\''+t.id+'\')">Re-approve</button>'; }
+      acts+='<button class="btn btn-secondary btn-sm" onclick="deleteTeam(\''+t.id+'\',\''+t.teamName+'\')" title="Delete">&#x1F5D1;</button>';
+      return '<tr><td>'+logo+'<strong>'+t.teamName+'</strong></td><td>'+(t.captainUsername||'&mdash;')+'</td><td style="white-space:nowrap;">'+date+'</td><td><span class="badge badge-'+t.status+'">'+t.status+'</span></td><td><div style="display:flex;gap:6px;flex-wrap:wrap;">'+acts+'</div></td></tr>';
+    }).join('');
+  }
+
+  function openTeamModal(id) {
+    var t = allTeams.find(function(x){ return x.id===id; });
+    if (!t) return;
+    var players = t.players || [];
+    var roleLabels = ['Captain','Player 2','Player 3','Player 4','Player 5'];
+    var rows = players.map(function(p,i){
+      return '<div style="background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 16px;margin-bottom:10px;">'
+        +'<div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--cyan);margin-bottom:10px;">'+(i===0?'&#11088; ':'')+roleLabels[i]+'</div>'
+        +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;">'
+        +'<div><div style="font-size:.68rem;color:var(--muted);margin-bottom:3px;">IGN</div><div style="font-weight:700;">'+(p.ign||p.name||'&mdash;')+'</div></div>'
+        +'<div><div style="font-size:.68rem;color:var(--muted);margin-bottom:3px;">Ingame ID</div><div style="font-family:monospace;letter-spacing:1px;">'+(p.ingameid||'&mdash;')+'</div></div>'
+        +'</div>'
+        +'<div><div style="font-size:.68rem;color:var(--muted);margin-bottom:3px;">Discord</div>'
+        +'<div style="color:#a78bfa;">@'+(p.discord||'&mdash;')+'</div>'
+        +'</div>'
+        +'</div>';
+    }).join('');
+    var logo = t.logo
+      ? '<img src="'+t.logo+'" style="width:64px;height:64px;border-radius:12px;object-fit:cover;border:1px solid var(--border);" />'
+      : '<div style="width:64px;height:64px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:2rem;">&#x1F6E1;&#xFE0F;</div>';
+    var date = new Date(t.registeredAt).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+    document.getElementById('team-modal-body').innerHTML =
+      '<div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);">'
+      +logo
+      +'<div><div style="font-size:1.4rem;font-weight:900;">'+t.teamName+'</div>'
+      +'<div style="color:var(--muted);font-size:.85rem;margin-top:5px;">Captain: <strong style="color:var(--text);">'+(t.captainUsername||'&mdash;')+'</strong> &nbsp;&middot;&nbsp; '+date+'</div>'
+      +'<div style="margin-top:8px;"><span class="badge badge-'+t.status+'">'+t.status+'</span></div>'
+      +'</div></div>'
+      +'<div style="font-size:.65rem;text-transform:uppercase;letter-spacing:2px;color:var(--muted);margin-bottom:12px;">Roster</div>'
+      +rows;
+    document.getElementById('team-modal').style.display='flex';
+  }
+  function closeTeamModal(){ document.getElementById('team-modal').style.display='none'; }
+  document.getElementById('team-modal').addEventListener('click', function(e){ if(e.target===this) closeTeamModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeTeamModal(); });
+</script>
+
+<!-- ── PWA: Service Worker + Install Prompt ── -->
+<script>
+  // Register service worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function(e) {
+        console.warn('SW registration failed:', e);
+      });
+    });
+  }
+
+  // Capture the beforeinstallprompt event
+  var _pwaPrompt = null;
+
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    _pwaPrompt = e;
+    // Only show if not already dismissed this session
+    if (!sessionStorage.getItem('pwa-dismissed')) {
+      showPWABanner();
+    }
+  });
+
+  // iOS Safari: show a manual instruction banner (no beforeinstallprompt on iOS)
+  window.addEventListener('load', function() {
+    var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+    var isStandalone = window.navigator.standalone === true;
+    if (isIOS && !isStandalone && !sessionStorage.getItem('pwa-dismissed')) {
+      showPWABanner(true);
+    }
+  });
+
+  function showPWABanner(isIOS) {
+    var banner = document.getElementById('pwa-banner');
+    if (!banner) return;
+    if (isIOS) {
+      // Change button to show iOS instructions
+      var installBtn = document.getElementById('pwa-install-btn');
+      if (installBtn) {
+        installBtn.textContent = 'How?';
+        installBtn.onclick = function() {
+          toast('Tap the Share button (□↑) then "Add to Home Screen"', 'info');
+        };
+      }
+    } else {
+      var installBtn = document.getElementById('pwa-install-btn');
+      if (installBtn) {
+        installBtn.onclick = function() { installPWA(); };
+      }
+    }
+    banner.style.display = 'flex';
+  }
+
+  function installPWA() {
+    if (!_pwaPrompt) return;
+    _pwaPrompt.prompt();
+    _pwaPrompt.userChoice.then(function(result) {
+      if (result.outcome === 'accepted') {
+        dismissPWA();
+      }
+      _pwaPrompt = null;
+    });
+  }
+
+  function dismissPWA() {
+    sessionStorage.setItem('pwa-dismissed', '1');
+    var banner = document.getElementById('pwa-banner');
+    if (banner) banner.style.display = 'none';
+  }
+
+  // Hide banner when app is launched from home screen
+  if (window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone) {
+    sessionStorage.setItem('pwa-dismissed', '1');
+  }
+</script>
+</body>
+</html>
